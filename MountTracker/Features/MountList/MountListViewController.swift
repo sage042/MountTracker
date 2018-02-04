@@ -22,6 +22,7 @@ class MountListViewController: UITableViewController {
         super.viewDidLoad()
 
 		tableViewSetup()
+		tableViewHeaderSetup()
     }
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -29,45 +30,53 @@ class MountListViewController: UITableViewController {
 		realmViewModel.fetch()
 	}
 
+	// MARK: - RX Setup
+
+	/// Bind MountListViewModel.dataSource to tableView cells
 	func tableViewSetup() {
 		tableView.dataSource = nil
 		tableView.delegate = nil
 		tableView.rowHeight = 88
 
-		// bind MountListViewModel.dataSource to tableView cells
 		mountViewModel.dataSource.bind(to: tableView.rx.items(cellIdentifier: "MountTableViewCell", cellType: MountTableViewCell.self)) {
 			(_, element, cell) in
 			cell.prepare(with: element)
 		}
 		.disposed(by: disposeBag)
+	}
 
-		// bind tableView header to the RealmListViewModel and MountListViewModel
-		if let header = tableView.tableHeaderView as? CharacterSelectionHeaderView {
-			realmViewModel.dataSource
-				.bind(to: header.pickerView.rx.itemTitles) {
-					_, item in
-					return item.name
-				}
-				.disposed(by: disposeBag)
-
-			let realmField = header.realmField
-			header.pickerView.rx
-				.modelSelected(RealmModel.self)
-				.subscribe(onNext: { [unowned self] items in
-					self.mountViewModel.realmString.value = items.first?.slug ?? ""
-					realmField?.text = items.first?.name
-				})
-				.disposed(by: disposeBag)
-
-			header.characterField.rx
-				.text
-				.map { $0?
-					.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-					.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)?
-					.lowercased() ?? "" }
-				.bind(to: mountViewModel.characterString)
-				.disposed(by: disposeBag)
+	/// Bind tableView header to the RealmListViewModel and MountListViewModel
+	func tableViewHeaderSetup() {
+		guard let header = tableView.tableHeaderView as? CharacterSelectionHeaderView else {
+			return
 		}
+
+		// update pickerView with realm lists pretty name
+		realmViewModel.dataSource
+			.bind(to: header.pickerView.rx.itemTitles) {
+				_, item in
+				return item.name
+			}
+			.disposed(by: disposeBag)
+
+		// pickerView updates realm view model
+		header.pickerView.rx
+			.modelSelected(RealmModel.self)
+			.subscribe(onNext: { [unowned self] items in
+				self.mountViewModel.realm.value = items.first
+			})
+			.disposed(by: disposeBag)
+
+		// update realmField with realm view model's pretty name
+		mountViewModel.realm.asObservable()
+			.map { $0?.name }
+			.bind(to: header.realmField.rx.text)
+			.disposed(by: disposeBag)
+
+		// bidirectional update between characterField and character view model
+		let characterField = header.characterField.rx
+		(characterField.text <-> mountViewModel.characterString)
+			.disposed(by: disposeBag)
 	}
 
 }

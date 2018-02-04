@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct RealmListModel: Decodable {
+struct RealmListModel: Codable {
 	var realms: [RealmModel]
 }
 
-struct RealmModel: Decodable {
+struct RealmModel: Codable {
 	var type: String
 	var population: String
 	var queue: Bool

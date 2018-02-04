@@ -18,10 +18,14 @@ class CharacterSelectionHeaderView: UIView {
 	}()
 	var inputToolbar: UIToolbar = {
 		let toolbar = UIToolbar()
+		let spacer = UIBarButtonItem(
+			barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace,
+			target: nil,
+			action: nil)
 		let done = UIBarButtonItem(
 			barButtonSystemItem: UIBarButtonSystemItem.done,
 			target: self, action: #selector(dismissKeyboard))
-		toolbar.setItems([done], animated: false)
+		toolbar.setItems([spacer, done], animated: false)
 		toolbar.sizeToFit()
 		return toolbar
 	}()

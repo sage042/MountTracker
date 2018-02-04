@@ -12,8 +12,15 @@ import RxAlamofire
 
 class RealmListViewModel {
 
+	private enum Keys: String {
+		case realmList
+	}
+
 	// MARK: - Properties
-	private let realmList: Variable<RealmListModel?> = Variable(nil)
+	private let realmList: Variable<RealmListModel?> = {
+		let value: RealmListModel? = PersistenceManager.main.load(with: Keys.realmList.rawValue)
+		return Variable(value)
+	}()
 	private let disposeBag = DisposeBag()
 
 	// MARK: - Observables

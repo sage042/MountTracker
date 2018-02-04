@@ -12,13 +12,24 @@ import RxAlamofire
 
 class MountListViewModel {
 
+	enum Keys: String {
+		case characterString, realmString
+	}
+
 	private let disposeBag = DisposeBag()
 
 	// MARK: - Properties
 	private let characterMounts: Variable<CharacterMountsModel?> = Variable(nil)
 	private let masterMounts: Variable<MasterMountListModel?> = Variable(nil)
-	public let realmString: Variable<String> = Variable("")
-	public let characterString: Variable<String> = Variable("")
+	
+	public let realm: Variable<RealmModel?> = {
+		let realm: RealmModel? = PersistenceManager.main.load(with: Keys.realmString.rawValue)
+		return Variable(realm)
+	}()
+	public let characterString: Variable<String?> = {
+		let character: String? = PersistenceManager.main.load(with: Keys.characterString.rawValue)
+		return Variable(character)
+	}()
 
 	// MARK: - Observables
 	public let dataSource: Observable<[MountModel]>
@@ -41,10 +52,14 @@ class MountListViewModel {
 		}
 
 		Observable
-			.combineLatest(characterString.asObservable(), realmString.asObservable())
+			.combineLatest(characterString.asObservable(), realm.asObservable())
 			.debounce(0.5, scheduler: MainScheduler.instance)
 			.subscribe(onNext: { [unowned self] (character, realm) in
-				self.fetchCharacterMounts(character: character, realm: realm)
+				PersistenceManager.main.save(character, with: Keys.characterString.rawValue)
+				PersistenceManager.main.save(realm, with: Keys.realmString.rawValue)
+				self.fetchCharacterMounts(
+					character: character ?? "",
+					realm: realm?.slug ?? "")
 			})
 			.disposed(by: disposeBag)
 	}
