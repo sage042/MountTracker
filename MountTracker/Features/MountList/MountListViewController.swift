@@ -101,7 +101,7 @@ class MountListViewController: UITableViewController {
 			.map { (character) -> UIColor in
 				switch character?.faction {
 				case .alliance?: return UIColor(red: 46/255, green: 73/255, blue: 148/255, alpha: 1)
-				case .horde?: return UIColor(red: 140/255, green: 22/255, blue: 22/255, alpha: 1)
+				case .horde?: return UIColor(red: 183/255, green: 38/255, blue: 43/255, alpha: 1)
 				default: return UIColor.white
 				}
 			}
