@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class MountListViewController: UITableViewController {
 
@@ -17,6 +18,8 @@ class MountListViewController: UITableViewController {
 	let mountViewModel: MountListViewModel = MountListViewModel()
 	let realmViewModel: RealmListViewModel = RealmListViewModel()
 	let disposeBag: DisposeBag = DisposeBag()
+
+	// MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,11 +41,21 @@ class MountListViewController: UITableViewController {
 		tableView.delegate = nil
 		tableView.rowHeight = 88
 
-		mountViewModel.dataSource.bind(to: tableView.rx.items(cellIdentifier: "MountTableViewCell", cellType: MountTableViewCell.self)) {
-			(_, element, cell) in
-			cell.prepare(with: element)
-		}
-		.disposed(by: disposeBag)
+		let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, MountModel>>(
+			configureCell: { (_, tv, indexPath, element) in
+				let cell = tv.dequeueReusableCell(withIdentifier: "MountTableViewCell", for: indexPath) as! MountTableViewCell
+				cell.prepare(with: element)
+				return cell
+			},
+			titleForHeaderInSection: { dataSource, sectionIndex in
+				return dataSource[sectionIndex].model
+			}
+		)
+
+		// bind dataSource to MountTableViewCell items
+		mountViewModel.dataSource
+			.bind(to: tableView.rx.items(dataSource: dataSource))
+			.disposed(by: disposeBag)
 	}
 
 	/// Bind tableView header to the RealmListViewModel and MountListViewModel

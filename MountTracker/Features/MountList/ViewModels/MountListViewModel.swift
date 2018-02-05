@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxAlamofire
+import RxDataSources
 
 class MountListViewModel {
 
@@ -32,25 +33,33 @@ class MountListViewModel {
 	}()
 
 	// MARK: - Observables
-	public let dataSource: Observable<[MountModel]>
+	public let dataSource: Observable<[SectionModel<String, MountModel>]>
 	public let collectedCount: Observable<Int>
-	public let totalCount: Observable<Int>
+	public let neededCount: Observable<Int>
 
 	init() {
+
+		// Map dataSource to character and master lists
 		dataSource = Observable
 			.combineLatest(masterMounts.asObservable(), characterMounts.asObservable())
 			.map({ (master, character) in
-				return character?.mounts.collected ?? master?.mounts ?? []
+				let masterList = master?.mounts ?? []
+				let characterList = character?.mounts.collected ?? []
+				let needed = Set<MountModel>(masterList).subtracting(Set(characterList))
+				return [SectionModel(model: "Collected", items: characterList),
+						SectionModel(model: "Needed", items: Array(needed))]
 			})
-		collectedCount = characterMounts.asObservable().map { model in
-			return model?.mounts.numCollected ?? 0
-		}
-		totalCount = characterMounts.asObservable().map { model in
-			var total = model?.mounts.numCollected ?? 0
-			total += model?.mounts.numNotCollected ?? 0
-			return total
+
+		collectedCount = characterMounts.asObservable().map {
+			$0?.mounts.numCollected ?? 0
 		}
 
+		neededCount = characterMounts.asObservable().map {
+			$0?.mounts.numNotCollected ?? 0
+		}
+
+		// observe changes to selected character and realm
+		// fetch characterMounts every 0.5 seconds
 		Observable
 			.combineLatest(characterString.asObservable(), realm.asObservable())
 			.debounce(0.5, scheduler: MainScheduler.instance)
@@ -69,8 +78,7 @@ class MountListViewModel {
 	}
 
 	func fetchCharacterMounts(character: String, realm: String) {
-		guard !character.isEmpty, !character.isEmpty,
-			let url = Api.mounts(character: character, realm: realm) else {
+		guard let url = Api.mounts(character: character, realm: realm) else {
 			return
 		}
 		RxAlamofire

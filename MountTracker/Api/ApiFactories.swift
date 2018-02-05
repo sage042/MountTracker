@@ -19,6 +19,8 @@ struct SecretKeys: Decodable {
 
 enum Api {
 
+	static let baseUrl: String = "https://us.api.battle.net/wow"
+
 	/// Load SecretKeys from bundle resources
 	private static let secrets: SecretKeys? = {
 		guard let filePath = Bundle.main.path(forResource: "Secret", ofType: "json"),
@@ -37,19 +39,21 @@ enum Api {
 
 	static func masterMountList() -> URL? {
 		guard let secrets = secrets else { return nil }
-		let urlString = "https://us.api.battle.net/wow/mount/?locale=en_US&apikey=\(secrets.blizzardKey)"
+		let urlString = baseUrl + "/mount/?locale=en_US&apikey=\(secrets.blizzardKey)"
 		return URL(string: urlString)
 	}
 
 	static func mounts(character: String, realm: String) -> URL? {
-		guard let secrets = secrets else { return nil }
-		let urlString = "https://us.api.battle.net/wow/character/\(realm)/\(character)?fields=mounts&locale=en_US&apikey=\(secrets.blizzardKey)"
+		guard let secrets = secrets, !character.isEmpty, !realm.isEmpty else {
+			return nil
+		}
+		let urlString = baseUrl + "/character/\(realm)/\(character)?fields=mounts&locale=en_US&apikey=\(secrets.blizzardKey)"
 		return URL(string: urlString)
 	}
 
 	static func realms() -> URL? {
 		guard let secrets = secrets else { return nil }
-		let urlString = "https://us.api.battle.net/wow/realm/status?locale=en_US&apikey=\(secrets.blizzardKey)"
+		let urlString = baseUrl + "/realm/status?locale=en_US&apikey=\(secrets.blizzardKey)"
 		return URL(string: urlString)
 	}
 }

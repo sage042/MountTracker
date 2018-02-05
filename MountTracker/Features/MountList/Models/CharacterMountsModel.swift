@@ -20,7 +20,7 @@ struct MountListModel: Decodable {
 	var collected: [MountModel]
 }
 
-struct MountModel: Decodable {
+struct MountModel: Decodable, Hashable {
 	var name: String
 	var spellId: Int
 	var creatureId: Int
@@ -31,4 +31,9 @@ struct MountModel: Decodable {
 	var isFlying: Bool
 	var isAquatic: Bool
 	var isJumping: Bool
+
+	static func ==(lhs: MountModel, rhs: MountModel) -> Bool {
+		return lhs.hashValue == rhs.hashValue
+	}
+	var hashValue: Int { return spellId }
 }
