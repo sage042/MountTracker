@@ -15,8 +15,11 @@ import RxDataSources
 class MountListViewController: UITableViewController {
 
 	// MARK: - Properties
-	let mountViewModel: MountListViewModel = MountListViewModel()
 	let realmViewModel: RealmListViewModel = RealmListViewModel()
+	let characterViewModel: CharacterViewModel = CharacterViewModel()
+	lazy var mountViewModel: MountListViewModel = {
+		return MountListViewModel(characterMounts: self.characterViewModel.characterMounts)
+	}()
 	let disposeBag: DisposeBag = DisposeBag()
 
 	// MARK: - Lifecycle
@@ -26,6 +29,7 @@ class MountListViewController: UITableViewController {
 
 		tableViewSetup()
 		tableViewHeaderSetup()
+		styleSetup()
     }
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -76,19 +80,48 @@ class MountListViewController: UITableViewController {
 		header.pickerView.rx
 			.modelSelected(RealmModel.self)
 			.subscribe(onNext: { [unowned self] items in
-				self.mountViewModel.realm.value = items.first
+				self.characterViewModel.realm.value = items.first
 			})
 			.disposed(by: disposeBag)
 
 		// update realmField with realm view model's pretty name
-		mountViewModel.realm.asObservable()
+		characterViewModel.realm.asObservable()
 			.map { $0?.name }
 			.bind(to: header.realmField.rx.text)
 			.disposed(by: disposeBag)
 
 		// bidirectional update between characterField and character view model
 		let characterField = header.characterField.rx
-		(characterField.text <-> mountViewModel.characterString)
+		(characterField.text <-> characterViewModel.characterString)
+			.disposed(by: disposeBag)
+	}
+
+	func styleSetup() {
+		characterViewModel.characterMounts
+			.map { (character) -> UIColor in
+				switch character?.faction {
+				case .alliance?: return UIColor(red: 46/255, green: 73/255, blue: 148/255, alpha: 1)
+				case .horde?: return UIColor(red: 140/255, green: 22/255, blue: 22/255, alpha: 1)
+				default: return UIColor.white
+				}
+			}
+			.subscribe(onNext: { (color) in
+				self.navigationController?.navigationBar.barTintColor = color
+			})
+			.disposed(by: disposeBag)
+
+		characterViewModel.characterMounts
+			.map { (character) -> UIColor in
+				switch character?.faction {
+				case .alliance?: return UIColor(red: 241/255, green: 183/255, blue: 5/255, alpha: 1)
+				case .horde?: return UIColor.black
+				default: return UIColor.black
+				}
+			}
+			.subscribe(onNext: { (color) in
+				self.navigationController?.navigationBar.titleTextAttributes = [
+					NSAttributedStringKey.foregroundColor: color]
+			})
 			.disposed(by: disposeBag)
 	}
 

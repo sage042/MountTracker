@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		059FF9F2AFC9A262068626F4 /* Pods_MountTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9B1532937D615C04154767 /* Pods_MountTracker.framework */; };
+		0828637B202802B500A91D1D /* CharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0828637A202802B500A91D1D /* CharacterViewModel.swift */; };
 		084C81922022E9C60003C66F /* MountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C81912022E9C60003C66F /* MountTableViewCell.swift */; };
 		0858899C2022E8D80045185C /* MountListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0858899B2022E8D80045185C /* MountListViewController.swift */; };
 		08747737202269E60038D55C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08747736202269E60038D55C /* AppDelegate.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0828637A202802B500A91D1D /* CharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewModel.swift; sourceTree = "<group>"; };
 		084C81912022E9C60003C66F /* MountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountTableViewCell.swift; sourceTree = "<group>"; };
 		0858899B2022E8D80045185C /* MountListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountListViewController.swift; sourceTree = "<group>"; };
 		08747733202269E60038D55C /* MountTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MountTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +126,7 @@
 			children = (
 				08D97B65202509F900C80927 /* MountListViewModel.swift */,
 				087826A52026D6C70039997C /* RealmViewModel.swift */,
+				0828637A202802B500A91D1D /* CharacterViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				087826A62026D6C70039997C /* RealmViewModel.swift in Sources */,
 				08D97B61202505C600C80927 /* CharacterMountsModel.swift in Sources */,
 				08A1F2882027B35000CA1D08 /* RxBidirectionalOperator.swift in Sources */,
+				0828637B202802B500A91D1D /* CharacterViewModel.swift in Sources */,
 				08747737202269E60038D55C /* AppDelegate.swift in Sources */,
 				08D97B6820258BB900C80927 /* MountMasterList.swift in Sources */,
 				087826A42026B9C60039997C /* RealmListModel.swift in Sources */,

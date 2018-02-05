@@ -8,9 +8,14 @@
 
 import Foundation
 
+enum Faction: Int, Decodable {
+	case alliance, horde, neutral
+}
+
 struct CharacterMountsModel: Decodable {
 	var name: String
 	var realm: String
+	var faction: Faction
 	var mounts: MountListModel
 }
 
