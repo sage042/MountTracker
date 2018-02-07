@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		059FF9F2AFC9A262068626F4 /* Pods_MountTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9B1532937D615C04154767 /* Pods_MountTracker.framework */; };
 		0828637B202802B500A91D1D /* CharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0828637A202802B500A91D1D /* CharacterViewModel.swift */; };
+		08298EB8202AC678005E3612 /* WowheadRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298EB7202AC678005E3612 /* WowheadRouter.swift */; };
+		08298EBF202AD123005E3612 /* MountListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298EBE202AD123005E3612 /* MountListRouter.swift */; };
 		084C81922022E9C60003C66F /* MountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C81912022E9C60003C66F /* MountTableViewCell.swift */; };
 		0858899C2022E8D80045185C /* MountListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0858899B2022E8D80045185C /* MountListViewController.swift */; };
 		08747737202269E60038D55C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08747736202269E60038D55C /* AppDelegate.swift */; };
@@ -31,6 +33,8 @@
 
 /* Begin PBXFileReference section */
 		0828637A202802B500A91D1D /* CharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewModel.swift; sourceTree = "<group>"; };
+		08298EB7202AC678005E3612 /* WowheadRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WowheadRouter.swift; sourceTree = "<group>"; };
+		08298EBE202AD123005E3612 /* MountListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountListRouter.swift; sourceTree = "<group>"; };
 		084C81912022E9C60003C66F /* MountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountTableViewCell.swift; sourceTree = "<group>"; };
 		0858899B2022E8D80045185C /* MountListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountListViewController.swift; sourceTree = "<group>"; };
 		08747733202269E60038D55C /* MountTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MountTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,9 +72,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08298EBD202ACFEE005E3612 /* Wowhead */ = {
+			isa = PBXGroup;
+			children = (
+				08298EB7202AC678005E3612 /* WowheadRouter.swift */,
+			);
+			path = Wowhead;
+			sourceTree = "<group>";
+		};
 		085889992022E8A40045185C /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				08298EBD202ACFEE005E3612 /* Wowhead */,
 				0858899A2022E8B90045185C /* MountList */,
 			);
 			path = Features;
@@ -83,6 +96,7 @@
 				087826A72026D6CF0039997C /* ViewModels */,
 				087826A82026D6E10039997C /* Views */,
 				0858899B2022E8D80045185C /* MountListViewController.swift */,
+				08298EBE202AD123005E3612 /* MountListRouter.swift */,
 			);
 			path = MountList;
 			sourceTree = "<group>";
@@ -335,11 +349,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08298EBF202AD123005E3612 /* MountListRouter.swift in Sources */,
 				087826A220268A5F0039997C /* CharacterSelectionHeaderView.swift in Sources */,
 				0858899C2022E8D80045185C /* MountListViewController.swift in Sources */,
 				08D97B6E20266B6300C80927 /* ApiFactories.swift in Sources */,
 				08A1F286202792B400CA1D08 /* PersistenceManager.swift in Sources */,
 				08D97B6B2026659E00C80927 /* UIImageViewHelper.swift in Sources */,
+				08298EB8202AC678005E3612 /* WowheadRouter.swift in Sources */,
 				087826A62026D6C70039997C /* RealmViewModel.swift in Sources */,
 				08D97B61202505C600C80927 /* CharacterMountsModel.swift in Sources */,
 				08A1F2882027B35000CA1D08 /* RxBidirectionalOperator.swift in Sources */,

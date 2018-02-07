@@ -33,7 +33,8 @@ enum Api {
 	}()
 
 	static func iconURL(_ icon: String) -> URL? {
-		let urlString = "http://media.blizzard.com/wow/icons/56/\(icon).jpg"
+//		let urlString = "http://media.blizzard.com/wow/icons/56/\(icon).jpg"
+		let urlString = "http://wow.zamimg.com/images/wow/icons/large/\(icon).jpg"
 		return URL(string: urlString)
 	}
 

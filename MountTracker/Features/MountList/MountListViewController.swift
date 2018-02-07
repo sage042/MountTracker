@@ -22,6 +22,10 @@ class MountListViewController: UITableViewController {
 	}()
 	let disposeBag: DisposeBag = DisposeBag()
 
+	lazy var router: MountlistRouter = {
+		return MountlistRouter(controller: self)
+	}()
+
 	// MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -55,6 +59,16 @@ class MountListViewController: UITableViewController {
 				return dataSource[sectionIndex].model
 			}
 		)
+
+		tableView.rx
+			.itemSelected
+			.map { indexPath in
+				return dataSource[indexPath].spellId
+			}
+			.subscribe(onNext: { [unowned self] spellId in
+				self.router.presentWowhead(spellId: spellId)
+			})
+			.disposed(by: disposeBag)
 
 		// bind dataSource to MountTableViewCell items
 		mountViewModel.dataSource
