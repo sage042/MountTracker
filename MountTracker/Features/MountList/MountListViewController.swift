@@ -110,6 +110,11 @@ class MountListViewController: UITableViewController {
 
 	func styleSetup() {
 
+		characterViewModel.characterName
+			.map { $0 ?? "Mounts" }
+			.bind(to: navigationItem.rx.title)
+			.disposed(by: disposeBag)
+
 		// map faction to nav bar color
 		characterViewModel.faction
 			.map { (faction) -> UIColor in
@@ -165,6 +170,7 @@ class MountListViewController: UITableViewController {
 			button.setAttributedTitle(labelString, for: .normal)
 			button.setImage(nil, for: .normal)
 		}
+		button.contentHorizontalAlignment = .left
 
 		// need to reset bar button item in order for the size to be set correctly
 		navigationItem.leftBarButtonItem = nil

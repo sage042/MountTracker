@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Mount List-->
+        <!--Mount Collection-->
         <scene sceneID="ZMQ-Yi-U80">
             <objects>
                 <tableViewController id="ka6-Va-1PN" customClass="MountListViewController" customModule="MountTracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -22,13 +22,13 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Character Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cmB-GR-U7k">
-                                    <rect key="frame" x="16" y="7" width="167.5" height="30"/>
+                                    <rect key="frame" x="20" y="7" width="163.5" height="30"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" textContentType="username"/>
                                 </textField>
                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Realm" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KZ0-sB-B7h">
-                                    <rect key="frame" x="191.5" y="7" width="167.5" height="30"/>
+                                    <rect key="frame" x="191.5" y="7" width="163.5" height="30"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
@@ -36,11 +36,11 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="cmB-GR-U7k" firstAttribute="leading" secondItem="6E8-ZK-VwF" secondAttribute="leading" constant="16" id="2Nt-wv-I1y"/>
+                                <constraint firstItem="cmB-GR-U7k" firstAttribute="leading" secondItem="6E8-ZK-VwF" secondAttribute="leading" constant="20" id="2Nt-wv-I1y"/>
                                 <constraint firstItem="KZ0-sB-B7h" firstAttribute="leading" secondItem="cmB-GR-U7k" secondAttribute="trailing" constant="8" id="4q5-u4-Fn6"/>
                                 <constraint firstItem="KZ0-sB-B7h" firstAttribute="centerY" secondItem="6E8-ZK-VwF" secondAttribute="centerY" id="MOq-hl-Joa"/>
                                 <constraint firstItem="cmB-GR-U7k" firstAttribute="centerY" secondItem="6E8-ZK-VwF" secondAttribute="centerY" id="NPC-A4-0Oe"/>
-                                <constraint firstAttribute="trailing" secondItem="KZ0-sB-B7h" secondAttribute="trailing" constant="16" id="aYG-l3-GXe"/>
+                                <constraint firstAttribute="trailing" secondItem="KZ0-sB-B7h" secondAttribute="trailing" constant="20" id="aYG-l3-GXe"/>
                                 <constraint firstItem="KZ0-sB-B7h" firstAttribute="width" secondItem="cmB-GR-U7k" secondAttribute="width" id="fLQ-sj-OlH"/>
                             </constraints>
                             <connections>
@@ -57,25 +57,25 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ucm-tg-PVR">
-                                            <rect key="frame" x="16" y="16" width="56" height="56"/>
+                                            <rect key="frame" x="20" y="16" width="56" height="56"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="56" id="Y04-fo-Y1W"/>
                                                 <constraint firstAttribute="height" priority="999" constant="56" id="rLt-4e-UXw"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MTC-6p-9ZD">
-                                            <rect key="frame" x="88" y="15.5" width="271" height="23"/>
+                                            <rect key="frame" x="92" y="15.5" width="263" height="23"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ucm-tg-PVR" firstAttribute="leading" secondItem="La1-BP-WcF" secondAttribute="leading" constant="16" id="GBl-Pf-WZs"/>
+                                        <constraint firstItem="ucm-tg-PVR" firstAttribute="leading" secondItem="La1-BP-WcF" secondAttribute="leading" constant="20" id="GBl-Pf-WZs"/>
                                         <constraint firstItem="MTC-6p-9ZD" firstAttribute="leading" secondItem="ucm-tg-PVR" secondAttribute="trailing" constant="16" id="GCU-5T-Dav"/>
                                         <constraint firstItem="MTC-6p-9ZD" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="ucm-tg-PVR" secondAttribute="bottom" id="Gvm-mI-h8g"/>
                                         <constraint firstAttribute="bottom" secondItem="ucm-tg-PVR" secondAttribute="bottom" constant="16" id="N2w-EG-TiI"/>
-                                        <constraint firstAttribute="trailing" secondItem="MTC-6p-9ZD" secondAttribute="trailing" constant="16" id="cuG-zA-M6V"/>
+                                        <constraint firstAttribute="trailing" secondItem="MTC-6p-9ZD" secondAttribute="trailing" constant="20" id="cuG-zA-M6V"/>
                                         <constraint firstItem="MTC-6p-9ZD" firstAttribute="top" secondItem="ucm-tg-PVR" secondAttribute="top" id="r2h-su-ewd"/>
                                         <constraint firstItem="ucm-tg-PVR" firstAttribute="top" secondItem="La1-BP-WcF" secondAttribute="top" constant="16" id="sTq-PV-7bU"/>
                                     </constraints>
@@ -92,7 +92,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Mount List" id="As1-sG-IvO">
+                    <navigationItem key="navigationItem" title="Mount Collection" id="As1-sG-IvO">
                         <barButtonItem key="leftBarButtonItem" width="84" style="plain" id="DAS-sz-9NX">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8bo-Tb-NCh">
                                 <rect key="frame" x="16" y="5" width="84" height="34"/>

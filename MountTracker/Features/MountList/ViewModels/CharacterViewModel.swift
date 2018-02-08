@@ -35,6 +35,7 @@ class CharacterViewModel {
 	public let characterMounts: Observable<CharacterMountsModel?>
 	public let faction: Observable<Faction>
 	public let thumbnail: Observable<UIImage?>
+	public let characterName: Observable<String?>
 
 	// MARK: - Lifecycle
 
@@ -42,6 +43,7 @@ class CharacterViewModel {
 		characterMounts = _characterMounts.asObservable()
 		faction = characterMounts.map { $0?.faction ?? .neutral }
 		thumbnail = _thumbnail.asObservable()
+		characterName = characterMounts.map { $0?.name }
 
 		// observe changes to selected character and realm
 		// fetch characterMounts every 0.5 seconds
