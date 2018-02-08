@@ -17,40 +17,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="6E8-ZK-VwF" customClass="CharacterSelectionHeaderView" customModule="MountTracker" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Character Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cmB-GR-U7k">
-                                    <rect key="frame" x="20" y="7" width="163.5" height="30"/>
-                                    <nil key="textColor"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" textContentType="username"/>
-                                </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Realm" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KZ0-sB-B7h">
-                                    <rect key="frame" x="191.5" y="7" width="163.5" height="30"/>
-                                    <nil key="textColor"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </textField>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstItem="cmB-GR-U7k" firstAttribute="leading" secondItem="6E8-ZK-VwF" secondAttribute="leading" constant="20" id="2Nt-wv-I1y"/>
-                                <constraint firstItem="KZ0-sB-B7h" firstAttribute="leading" secondItem="cmB-GR-U7k" secondAttribute="trailing" constant="8" id="4q5-u4-Fn6"/>
-                                <constraint firstItem="KZ0-sB-B7h" firstAttribute="centerY" secondItem="6E8-ZK-VwF" secondAttribute="centerY" id="MOq-hl-Joa"/>
-                                <constraint firstItem="cmB-GR-U7k" firstAttribute="centerY" secondItem="6E8-ZK-VwF" secondAttribute="centerY" id="NPC-A4-0Oe"/>
-                                <constraint firstAttribute="trailing" secondItem="KZ0-sB-B7h" secondAttribute="trailing" constant="20" id="aYG-l3-GXe"/>
-                                <constraint firstItem="KZ0-sB-B7h" firstAttribute="width" secondItem="cmB-GR-U7k" secondAttribute="width" id="fLQ-sj-OlH"/>
-                            </constraints>
-                            <connections>
-                                <outlet property="characterField" destination="cmB-GR-U7k" id="0EN-07-SZm"/>
-                                <outlet property="realmField" destination="KZ0-sB-B7h" id="Ug4-L9-1Z9"/>
-                            </connections>
-                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MountTableViewCell" rowHeight="88" id="8G6-1Y-1YN" customClass="MountTableViewCell" customModule="MountTracker" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="88"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8G6-1Y-1YN" id="La1-BP-WcF">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="87.5"/>

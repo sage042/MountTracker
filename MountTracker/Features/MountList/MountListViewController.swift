@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -32,8 +31,7 @@ class MountListViewController: UITableViewController {
         super.viewDidLoad()
 
 		tableViewSetup()
-		tableViewHeaderSetup()
-		styleSetup()
+		navBarSetup()
     }
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -74,84 +72,66 @@ class MountListViewController: UITableViewController {
 			.disposed(by: disposeBag)
 	}
 
-	/// Bind tableView header to the RealmListViewModel and MountListViewModel
-	func tableViewHeaderSetup() {
-		guard let header = tableView.tableHeaderView as? CharacterSelectionHeaderView else {
-			return
-		}
+//	/// Bind tableView header to the RealmListViewModel and MountListViewModel
+//	func tableViewHeaderSetup() {
+//		guard let header = tableView.tableHeaderView as? CharacterSelectionHeaderView else {
+//			return
+//		}
+//
+//		// update pickerView with realm lists pretty name
+//		realmViewModel.dataSource
+//			.bind(to: header.pickerView.rx.itemTitles) {
+//				_, item in
+//				return item.name
+//			}
+//			.disposed(by: disposeBag)
+//
+//		// pickerView updates realm view model
+//		header.pickerView.rx
+//			.modelSelected(RealmModel.self)
+//			.subscribe(onNext: { [unowned self] items in
+//				self.characterViewModel.realm.value = items.first
+//			})
+//			.disposed(by: disposeBag)
+//
+//		// update realmField with realm view model's pretty name
+//		characterViewModel.realm.asObservable()
+//			.map { $0?.name }
+//			.bind(to: header.realmField.rx.text)
+//			.disposed(by: disposeBag)
+//
+//		// bidirectional update between characterField and character view model
+//		let characterField = header.characterField.rx
+//		(characterField.text <-> characterViewModel.characterString)
+//			.disposed(by: disposeBag)
+//	}
 
-		// update pickerView with realm lists pretty name
-		realmViewModel.dataSource
-			.bind(to: header.pickerView.rx.itemTitles) {
-				_, item in
-				return item.name
-			}
-			.disposed(by: disposeBag)
+	func navBarSetup() {
 
-		// pickerView updates realm view model
-		header.pickerView.rx
-			.modelSelected(RealmModel.self)
-			.subscribe(onNext: { [unowned self] items in
-				self.characterViewModel.realm.value = items.first
-			})
-			.disposed(by: disposeBag)
-
-		// update realmField with realm view model's pretty name
-		characterViewModel.realm.asObservable()
-			.map { $0?.name }
-			.bind(to: header.realmField.rx.text)
-			.disposed(by: disposeBag)
-
-		// bidirectional update between characterField and character view model
-		let characterField = header.characterField.rx
-		(characterField.text <-> characterViewModel.characterString)
-			.disposed(by: disposeBag)
-	}
-
-	func styleSetup() {
-
+		// bind character name to navigation title
 		characterViewModel.characterName
 			.map { $0 ?? "Mounts" }
 			.bind(to: navigationItem.rx.title)
 			.disposed(by: disposeBag)
 
-		// map faction to nav bar color
-		characterViewModel.faction
-			.map { (faction) -> UIColor in
-				switch faction {
-				case .alliance: return UIColor(red: 46/255, green: 73/255, blue: 148/255, alpha: 1)
-				case .horde: return UIColor(red: 183/255, green: 38/255, blue: 43/255, alpha: 1)
-				default: return UIColor.white
-				}
-			}
-			.subscribe(onNext: { (color) in
-				self.navigationController?.navigationBar.barTintColor = color
-			})
-			.disposed(by: disposeBag)
-
-		// map faction to nav bar title color
-		characterViewModel.faction
-			.map { (faction) -> UIColor in
-				switch faction {
-				case .alliance: return UIColor(red: 241/255, green: 183/255, blue: 5/255, alpha: 1)
-				case .horde: return UIColor.black
-				default: return UIColor.black
-				}
-			}
-			.subscribe(onNext: { [unowned self] (color) in
-				self.navigationController?.navigationBar.titleTextAttributes = [
-					.foregroundColor: color]
-				self.navigationController?.navigationBar.largeTitleTextAttributes = [
-					.foregroundColor: color
-				]
-				self.navigationItem.leftBarButtonItem?.tintColor = color
-			})
-			.disposed(by: disposeBag)
+		// map faction to nav bar colors
+		if let navBar = navigationController?.navigationBar {
+			characterViewModel.faction
+				.subscribe(onNext: navBar.color)
+				.disposed(by: disposeBag)
+		}
 
 		// map character selection to left icon
 		characterViewModel.thumbnail
 			.subscribe(onNext: updateProfileButton)
 			.disposed(by: disposeBag)
+
+		if let navBarButton = navigationItem.leftBarButtonItem?.customView as? UIButton {
+			navBarButton.rx
+				.controlEvent(UIControlEvents.touchUpInside)
+				.bind(onNext: presentCharacterSelect)
+				.disposed(by: disposeBag)
+		}
 	}
 
 	private func updateProfileButton(with thumbnail: UIImage?) {
@@ -175,6 +155,10 @@ class MountListViewController: UITableViewController {
 		// need to reset bar button item in order for the size to be set correctly
 		navigationItem.leftBarButtonItem = nil
 		navigationItem.leftBarButtonItem = barButton
+	}
+
+	private func presentCharacterSelect() {
+		router.presentCharacterSelect(characterViewModel)
 	}
 
 }

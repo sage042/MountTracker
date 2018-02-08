@@ -8,16 +8,16 @@
 
 import UIKit
 
-struct MountlistRouter {
-	private weak var controller: UIViewController?
-
-	init(controller: UIViewController) {
-		self.controller = controller
-	}
+class MountlistRouter: Router<Any> {
 
 	func presentWowhead(spellId: Int) {
 		guard let controller = controller else { return }
-		WowheadRouter().present(from: controller, spellId: spellId)
+		WowheadRouter().present(from: controller, with: spellId)
+	}
+
+	func presentCharacterSelect(_ characterViewModel: CharacterViewModel) {
+		guard let controller = controller else { return }
+		CharacterSelectRouter().present(from: controller, with: characterViewModel)
 	}
 
 }

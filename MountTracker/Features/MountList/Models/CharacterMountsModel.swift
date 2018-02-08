@@ -10,14 +10,6 @@ import Foundation
 
 enum Faction: Int, Decodable {
 	case alliance, horde, neutral
-
-	init(_ factionInt: Int?) {
-		guard let factionInt = factionInt else {
-			self = .neutral
-			return
-		}
-		self = Faction(rawValue: factionInt) ?? .neutral
-	}
 }
 
 struct CharacterMountsModel: Decodable {

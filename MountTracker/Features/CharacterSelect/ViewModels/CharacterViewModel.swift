@@ -73,7 +73,8 @@ class CharacterViewModel {
 	}
 
 	func fetchThumbnail(character: CharacterMountsModel?) {
-		guard let url = Api.thumbnailURL(character?.thumbnail) else {
+		guard let url = Api.thumbnailURL(character?.thumbnail) ??
+			Api.iconURL("ability_rogue_disguise") else {
 			_thumbnail.value = nil
 			return
 		}

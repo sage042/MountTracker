@@ -13,6 +13,12 @@
 		08298EBF202AD123005E3612 /* MountListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298EBE202AD123005E3612 /* MountListRouter.swift */; };
 		08298EC1202B9817005E3612 /* FontUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298EC0202B9817005E3612 /* FontUtilities.swift */; };
 		08298EC3202B9846005E3612 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08298EC2202B9846005E3612 /* icomoon.ttf */; };
+		08298EC7202CBB24005E3612 /* CharacterSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298EC5202CBB24005E3612 /* CharacterSelectViewController.swift */; };
+		08298EC8202CBB24005E3612 /* CharacterSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08298EC6202CBB24005E3612 /* CharacterSelectViewController.xib */; };
+		08298ECA202CBB39005E3612 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298EC9202CBB39005E3612 /* Identifiable.swift */; };
+		08298ECC202CCD53005E3612 /* CharacterSelectRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298ECB202CCD53005E3612 /* CharacterSelectRouter.swift */; };
+		08298ECE202CCDB9005E3612 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298ECD202CCDB9005E3612 /* Router.swift */; };
+		08298ED0202CEBB4005E3612 /* ColorStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298ECF202CEBB4005E3612 /* ColorStyles.swift */; };
 		084C81922022E9C60003C66F /* MountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C81912022E9C60003C66F /* MountTableViewCell.swift */; };
 		0858899C2022E8D80045185C /* MountListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0858899B2022E8D80045185C /* MountListViewController.swift */; };
 		08747737202269E60038D55C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08747736202269E60038D55C /* AppDelegate.swift */; };
@@ -39,6 +45,12 @@
 		08298EBE202AD123005E3612 /* MountListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountListRouter.swift; sourceTree = "<group>"; };
 		08298EC0202B9817005E3612 /* FontUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontUtilities.swift; sourceTree = "<group>"; };
 		08298EC2202B9846005E3612 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
+		08298EC5202CBB24005E3612 /* CharacterSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSelectViewController.swift; sourceTree = "<group>"; };
+		08298EC6202CBB24005E3612 /* CharacterSelectViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterSelectViewController.xib; sourceTree = "<group>"; };
+		08298EC9202CBB39005E3612 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
+		08298ECB202CCD53005E3612 /* CharacterSelectRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSelectRouter.swift; sourceTree = "<group>"; };
+		08298ECD202CCDB9005E3612 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		08298ECF202CEBB4005E3612 /* ColorStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStyles.swift; sourceTree = "<group>"; };
 		084C81912022E9C60003C66F /* MountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountTableViewCell.swift; sourceTree = "<group>"; };
 		0858899B2022E8D80045185C /* MountListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountListViewController.swift; sourceTree = "<group>"; };
 		08747733202269E60038D55C /* MountTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MountTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,9 +96,29 @@
 			path = Wowhead;
 			sourceTree = "<group>";
 		};
+		08298EC4202CB88A005E3612 /* CharacterSelect */ = {
+			isa = PBXGroup;
+			children = (
+				08298ED1202CFB86005E3612 /* ViewModels */,
+				08298EC5202CBB24005E3612 /* CharacterSelectViewController.swift */,
+				08298EC6202CBB24005E3612 /* CharacterSelectViewController.xib */,
+				08298ECB202CCD53005E3612 /* CharacterSelectRouter.swift */,
+			);
+			path = CharacterSelect;
+			sourceTree = "<group>";
+		};
+		08298ED1202CFB86005E3612 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				0828637A202802B500A91D1D /* CharacterViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		085889992022E8A40045185C /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				08298EC4202CB88A005E3612 /* CharacterSelect */,
 				08298EBD202ACFEE005E3612 /* Wowhead */,
 				0858899A2022E8B90045185C /* MountList */,
 			);
@@ -145,7 +177,6 @@
 			children = (
 				08D97B65202509F900C80927 /* MountListViewModel.swift */,
 				087826A52026D6C70039997C /* RealmViewModel.swift */,
-				0828637A202802B500A91D1D /* CharacterViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -173,6 +204,9 @@
 				08298EC0202B9817005E3612 /* FontUtilities.swift */,
 				08D97B6A2026659E00C80927 /* UIImageViewHelper.swift */,
 				08A1F2872027B35000CA1D08 /* RxBidirectionalOperator.swift */,
+				08298EC9202CBB39005E3612 /* Identifiable.swift */,
+				08298ECD202CCDB9005E3612 /* Router.swift */,
+				08298ECF202CEBB4005E3612 /* ColorStyles.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -282,6 +316,7 @@
 				08298EC3202B9846005E3612 /* icomoon.ttf in Resources */,
 				0874773C202269E60038D55C /* Main.storyboard in Resources */,
 				08D97B7220267E6300C80927 /* ExampleSecret.json in Resources */,
+				08298EC8202CBB24005E3612 /* CharacterSelectViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,13 +401,18 @@
 				08298EB8202AC678005E3612 /* WowheadRouter.swift in Sources */,
 				087826A62026D6C70039997C /* RealmViewModel.swift in Sources */,
 				08D97B61202505C600C80927 /* CharacterMountsModel.swift in Sources */,
+				08298ECE202CCDB9005E3612 /* Router.swift in Sources */,
 				08A1F2882027B35000CA1D08 /* RxBidirectionalOperator.swift in Sources */,
 				0828637B202802B500A91D1D /* CharacterViewModel.swift in Sources */,
+				08298ECC202CCD53005E3612 /* CharacterSelectRouter.swift in Sources */,
+				08298EC7202CBB24005E3612 /* CharacterSelectViewController.swift in Sources */,
+				08298ED0202CEBB4005E3612 /* ColorStyles.swift in Sources */,
 				08747737202269E60038D55C /* AppDelegate.swift in Sources */,
 				08D97B6820258BB900C80927 /* MountMasterList.swift in Sources */,
 				087826A42026B9C60039997C /* RealmListModel.swift in Sources */,
 				08D97B66202509F900C80927 /* MountListViewModel.swift in Sources */,
 				084C81922022E9C60003C66F /* MountTableViewCell.swift in Sources */,
+				08298ECA202CBB39005E3612 /* Identifiable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
