@@ -58,8 +58,8 @@ class MountListViewModel {
 		guard let url = Api.masterMountList() else {
 			return
 		}
-		RxAlamofire
-			.requestData(.get, url)
+
+		requestData(.get, url)
 			.subscribe(onNext: { [unowned self] (r, data) in
 				self.masterMounts.value = try? JSONDecoder().decode(MasterMountListModel.self, from: data)
 			})

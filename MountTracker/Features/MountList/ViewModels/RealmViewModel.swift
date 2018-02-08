@@ -36,8 +36,8 @@ class RealmListViewModel {
 		guard let url = Api.realms() else {
 			return
 		}
-		RxAlamofire
-			.requestData(.get, url)
+
+		requestData(.get, url)
 			.subscribe(onNext: { [unowned self] (r, data) in
 				self.realmList.value = try? JSONDecoder().decode(RealmListModel.self, from: data)
 			})

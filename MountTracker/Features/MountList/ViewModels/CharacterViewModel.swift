@@ -20,6 +20,7 @@ class CharacterViewModel {
 
 	// MARK: - Properties
 	private let _characterMounts: Variable<CharacterMountsModel?> = Variable(nil)
+	private let _thumbnail: Variable<UIImage?> = Variable(nil)
 
 	public let realm: Variable<RealmModel?> = {
 		let realm: RealmModel? = PersistenceManager.main.load(with: Keys.realmString.rawValue)
@@ -31,37 +32,54 @@ class CharacterViewModel {
 	}()
 
 	// MARK: - Observables
-	public var characterMounts: Observable<CharacterMountsModel?> {
-		return _characterMounts.asObservable()
-	}
+	public let characterMounts: Observable<CharacterMountsModel?>
+	public let faction: Observable<Faction>
+	public let thumbnail: Observable<UIImage?>
 
 	// MARK: - Lifecycle
 
 	init() {
+		characterMounts = _characterMounts.asObservable()
+		faction = characterMounts.map { $0?.faction ?? .neutral }
+		thumbnail = _thumbnail.asObservable()
+
 		// observe changes to selected character and realm
 		// fetch characterMounts every 0.5 seconds
 		Observable
 			.combineLatest(characterString.asObservable(), realm.asObservable())
 			.debounce(0.5, scheduler: MainScheduler.instance)
-			.subscribe(onNext: { [unowned self] (character, realm) in
-				PersistenceManager.main.save(character, with: Keys.characterString.rawValue)
-				PersistenceManager.main.save(realm, with: Keys.realmString.rawValue)
-				self.fetchCharacterMounts(
-					character: character ?? "",
-					realm: realm?.slug ?? "")
+			.subscribe(onNext: fetchCharacterMounts)
+			.disposed(by: disposeBag)
+
+		characterMounts
+			.subscribe(onNext: fetchThumbnail)
+			.disposed(by: disposeBag)
+	}
+
+	func fetchCharacterMounts(character: String?, realm: RealmModel?) {
+		PersistenceManager.main.save(character, with: Keys.characterString.rawValue)
+		PersistenceManager.main.save(realm, with: Keys.realmString.rawValue)
+		guard let url = Api.mounts(character: character, realm: realm?.slug) else {
+			return
+		}
+
+		requestData(.get, url)
+			.subscribe(onNext: { [unowned self] (r, data) in
+				self._characterMounts.value = try? JSONDecoder().decode(CharacterMountsModel.self, from: data)
 			})
 			.disposed(by: disposeBag)
 	}
 
-	func fetchCharacterMounts(character: String, realm: String) {
-		guard let url = Api.mounts(character: character, realm: realm) else {
+	func fetchThumbnail(character: CharacterMountsModel?) {
+		guard let url = Api.thumbnailURL(character?.thumbnail) else {
+			_thumbnail.value = nil
 			return
 		}
-		RxAlamofire
-			.requestData(.get, url)
+
+		requestData(.get, url)
 			.subscribe(onNext: { [unowned self] (r, data) in
-				self._characterMounts.value = try? JSONDecoder().decode(CharacterMountsModel.self, from: data)
-			})
+				self._thumbnail.value = UIImage(data: data)
+				})
 			.disposed(by: disposeBag)
 	}
 

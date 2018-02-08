@@ -38,14 +38,22 @@ enum Api {
 		return URL(string: urlString)
 	}
 
+	static func thumbnailURL(_ thumbnail: String?) -> URL? {
+		guard let thumbnail = thumbnail else { return nil }
+		let urlString = "https://render-us.worldofwarcraft.com/character/\(thumbnail)"
+		return URL(string: urlString)
+	}
+
 	static func masterMountList() -> URL? {
 		guard let secrets = secrets else { return nil }
 		let urlString = baseUrl + "/mount/?locale=en_US&apikey=\(secrets.blizzardKey)"
 		return URL(string: urlString)
 	}
 
-	static func mounts(character: String, realm: String) -> URL? {
-		guard let secrets = secrets, !character.isEmpty, !realm.isEmpty else {
+	static func mounts(character: String?, realm: String?) -> URL? {
+		guard let secrets = secrets,
+			let character = character, !character.isEmpty,
+			let realm = realm, !realm.isEmpty else {
 			return nil
 		}
 		let urlString = baseUrl + "/character/\(realm)/\(character)?fields=mounts&locale=en_US&apikey=\(secrets.blizzardKey)"

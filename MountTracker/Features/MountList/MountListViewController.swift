@@ -65,9 +65,7 @@ class MountListViewController: UITableViewController {
 			.map { indexPath in
 				return dataSource[indexPath].spellId
 			}
-			.subscribe(onNext: { [unowned self] spellId in
-				self.router.presentWowhead(spellId: spellId)
-			})
+			.subscribe(onNext: router.presentWowhead)
 			.disposed(by: disposeBag)
 
 		// bind dataSource to MountTableViewCell items
@@ -111,11 +109,13 @@ class MountListViewController: UITableViewController {
 	}
 
 	func styleSetup() {
-		characterViewModel.characterMounts
-			.map { (character) -> UIColor in
-				switch character?.faction {
-				case .alliance?: return UIColor(red: 46/255, green: 73/255, blue: 148/255, alpha: 1)
-				case .horde?: return UIColor(red: 183/255, green: 38/255, blue: 43/255, alpha: 1)
+
+		// map faction to nav bar color
+		characterViewModel.faction
+			.map { (faction) -> UIColor in
+				switch faction {
+				case .alliance: return UIColor(red: 46/255, green: 73/255, blue: 148/255, alpha: 1)
+				case .horde: return UIColor(red: 183/255, green: 38/255, blue: 43/255, alpha: 1)
 				default: return UIColor.white
 				}
 			}
@@ -124,19 +124,51 @@ class MountListViewController: UITableViewController {
 			})
 			.disposed(by: disposeBag)
 
-		characterViewModel.characterMounts
-			.map { (character) -> UIColor in
-				switch character?.faction {
-				case .alliance?: return UIColor(red: 241/255, green: 183/255, blue: 5/255, alpha: 1)
-				case .horde?: return UIColor.black
+		// map faction to nav bar title color
+		characterViewModel.faction
+			.map { (faction) -> UIColor in
+				switch faction {
+				case .alliance: return UIColor(red: 241/255, green: 183/255, blue: 5/255, alpha: 1)
+				case .horde: return UIColor.black
 				default: return UIColor.black
 				}
 			}
-			.subscribe(onNext: { (color) in
+			.subscribe(onNext: { [unowned self] (color) in
 				self.navigationController?.navigationBar.titleTextAttributes = [
-					NSAttributedStringKey.foregroundColor: color]
+					.foregroundColor: color]
+				self.navigationController?.navigationBar.largeTitleTextAttributes = [
+					.foregroundColor: color
+				]
+				self.navigationItem.leftBarButtonItem?.tintColor = color
 			})
 			.disposed(by: disposeBag)
+
+		// map character selection to left icon
+		characterViewModel.thumbnail
+			.subscribe(onNext: updateProfileButton)
+			.disposed(by: disposeBag)
+	}
+
+	private func updateProfileButton(with thumbnail: UIImage?) {
+		guard let barButton = navigationItem.leftBarButtonItem,
+			let button: UIButton = barButton.customView as? UIButton else {
+			return
+		}
+		if let thumbnail = thumbnail {
+			button.setImage(thumbnail, for: .normal)
+			button.imageView?.contentMode = .center
+			button.setAttributedTitle(nil, for: .normal)
+		} else {
+			let labelString = NSAttributedString(
+				string: Glyph.user.rawValue,
+				attributes: [NSAttributedStringKey.font: UIFont.glyph(size: 32)])
+			button.setAttributedTitle(labelString, for: .normal)
+			button.setImage(nil, for: .normal)
+		}
+
+		// need to reset bar button item in order for the size to be set correctly
+		navigationItem.leftBarButtonItem = nil
+		navigationItem.leftBarButtonItem = barButton
 	}
 
 }
