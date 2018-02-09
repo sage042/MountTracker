@@ -21,6 +21,7 @@ class CharacterViewModel {
 	// MARK: - Properties
 	private let _characterMounts: Variable<CharacterMountsModel?> = Variable(nil)
 	private let _thumbnail: Variable<UIImage?> = Variable(nil)
+	private let _anonymous: Variable<UIImage?> = Variable(nil)
 
 	public let realm: Variable<RealmModel?> = {
 		let realm: RealmModel? = PersistenceManager.main.load(with: Keys.realmString.rawValue)
@@ -35,6 +36,7 @@ class CharacterViewModel {
 	public let characterMounts: Observable<CharacterMountsModel?>
 	public let faction: Observable<Faction>
 	public let thumbnail: Observable<UIImage?>
+	public let anonymous: Observable<UIImage?>
 	public let characterName: Observable<String?>
 
 	// MARK: - Lifecycle
@@ -43,6 +45,7 @@ class CharacterViewModel {
 		characterMounts = _characterMounts.asObservable()
 		faction = characterMounts.map { $0?.faction ?? .neutral }
 		thumbnail = _thumbnail.asObservable()
+		anonymous = _anonymous.asObservable()
 		characterName = characterMounts.map { $0?.name }
 
 		// observe changes to selected character and realm
@@ -61,6 +64,12 @@ class CharacterViewModel {
 	func fetchCharacterMounts(character: String?, realm: RealmModel?) {
 		PersistenceManager.main.save(character, with: Keys.characterString.rawValue)
 		PersistenceManager.main.save(realm, with: Keys.realmString.rawValue)
+
+		// if the character field is emptied force delete the character
+		if (character ?? "").isEmpty {
+			self._characterMounts.value = nil
+		}
+
 		guard let url = Api.mounts(character: character, realm: realm?.slug) else {
 			return
 		}
@@ -72,9 +81,18 @@ class CharacterViewModel {
 			.disposed(by: disposeBag)
 	}
 
+	func fetchAnonymousThumbnail() {
+		guard let url = Api.iconURL("ability_rogue_disguise") else { return }
+
+		requestData(.get, url)
+			.subscribe(onNext: { [unowned self] (r, data) in
+				self._anonymous.value = UIImage(data: data)
+			})
+			.disposed(by: disposeBag)
+	}
+
 	func fetchThumbnail(character: CharacterMountsModel?) {
-		guard let url = Api.thumbnailURL(character?.thumbnail) ??
-			Api.iconURL("ability_rogue_disguise") else {
+		guard let url = Api.thumbnailURL(character?.thumbnail) else {
 			_thumbnail.value = nil
 			return
 		}

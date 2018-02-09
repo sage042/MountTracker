@@ -110,6 +110,7 @@
 		08298ED1202CFB86005E3612 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				087826A52026D6C70039997C /* RealmViewModel.swift */,
 				0828637A202802B500A91D1D /* CharacterViewModel.swift */,
 			);
 			path = ViewModels;
@@ -176,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				08D97B65202509F900C80927 /* MountListViewModel.swift */,
-				087826A52026D6C70039997C /* RealmViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";

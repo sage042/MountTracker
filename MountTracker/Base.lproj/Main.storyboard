@@ -62,7 +62,7 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Mount Collection" id="As1-sG-IvO">
-                        <barButtonItem key="leftBarButtonItem" width="84" style="plain" id="DAS-sz-9NX">
+                        <barButtonItem key="leftBarButtonItem" width="84" id="DAS-sz-9NX">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8bo-Tb-NCh">
                                 <rect key="frame" x="16" y="5" width="84" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

@@ -146,7 +146,8 @@ class MountListViewController: UITableViewController {
 		} else {
 			let labelString = NSAttributedString(
 				string: Glyph.user.rawValue,
-				attributes: [NSAttributedStringKey.font: UIFont.glyph(size: 32)])
+				attributes: [NSAttributedStringKey.font: UIFont.glyph(size: 32),
+							 NSAttributedStringKey.foregroundColor: UIColor.black])
 			button.setAttributedTitle(labelString, for: .normal)
 			button.setImage(nil, for: .normal)
 		}

@@ -64,6 +64,7 @@ class CharacterSelectViewController: UIViewController {
 		navBarSetup()
 
 		realmViewModel.fetch()
+		characterViewModel.fetchAnonymousThumbnail()
     }
 
 	func fieldSetup() {
@@ -97,8 +98,11 @@ class CharacterSelectViewController: UIViewController {
 	func portraitSetup() {
 
 		// bind imageView to character thumbnail
-		characterViewModel.thumbnail
-			.bind(to: imageView.rx.image)
+		Observable
+			.combineLatest(characterViewModel.thumbnail, characterViewModel.anonymous)
+			.subscribe(onNext: { [unowned self] (character, anon) in
+				self.imageView.image = character ?? anon
+			})
 			.disposed(by: disposeBag)
 	}
 
