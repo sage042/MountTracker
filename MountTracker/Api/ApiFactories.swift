@@ -52,7 +52,8 @@ enum Api {
 
 	static func mounts(character: String?, realm: String?) -> URL? {
 		guard let secrets = secrets,
-			let character = character, !character.isEmpty,
+			let character = character?.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed),
+			!character.isEmpty,
 			let realm = realm, !realm.isEmpty else {
 			return nil
 		}

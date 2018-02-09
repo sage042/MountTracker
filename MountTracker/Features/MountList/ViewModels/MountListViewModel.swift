@@ -35,7 +35,7 @@ class MountListViewModel {
 			.map({ (master, character, searchTerm) in
 				var masterList = master?.mounts ?? []
 				if !searchTerm.isEmpty {
-					masterList = masterList.filter { $0.name.contains(searchTerm) }
+					masterList = masterList.filter { $0.name.lowercased().contains(searchTerm) }
 				}
 				var result: [SectionModel<String, MountModel>] = []
 
