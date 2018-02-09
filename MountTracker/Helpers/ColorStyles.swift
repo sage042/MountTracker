@@ -47,4 +47,18 @@ extension UINavigationBar {
 	}
 }
 
+extension UISearchBar {
+
+	/// Hack to get a search bar's text field
+	///    Stackoverflow results suggest accessing an
+	///    an Apple private property which could be rejected
+	///    this method searches through the subviews and may change
+	///    in future versions of iOS
+	func findSearchField() -> UITextField? {
+		return subviews.first?.subviews
+			.filter { $0 is UITextField }
+			.first as? UITextField
+	}
+}
+
 

@@ -25,6 +25,10 @@ class MountListViewController: UITableViewController {
 		return MountlistRouter(controller: self)
 	}()
 
+	var searchController: UISearchController = {
+		return UISearchController(searchResultsController: nil)
+	}()
+
 	// MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -72,41 +76,35 @@ class MountListViewController: UITableViewController {
 			.disposed(by: disposeBag)
 	}
 
-//	/// Bind tableView header to the RealmListViewModel and MountListViewModel
-//	func tableViewHeaderSetup() {
-//		guard let header = tableView.tableHeaderView as? CharacterSelectionHeaderView else {
-//			return
-//		}
-//
-//		// update pickerView with realm lists pretty name
-//		realmViewModel.dataSource
-//			.bind(to: header.pickerView.rx.itemTitles) {
-//				_, item in
-//				return item.name
-//			}
-//			.disposed(by: disposeBag)
-//
-//		// pickerView updates realm view model
-//		header.pickerView.rx
-//			.modelSelected(RealmModel.self)
-//			.subscribe(onNext: { [unowned self] items in
-//				self.characterViewModel.realm.value = items.first
-//			})
-//			.disposed(by: disposeBag)
-//
-//		// update realmField with realm view model's pretty name
-//		characterViewModel.realm.asObservable()
-//			.map { $0?.name }
-//			.bind(to: header.realmField.rx.text)
-//			.disposed(by: disposeBag)
-//
-//		// bidirectional update between characterField and character view model
-//		let characterField = header.characterField.rx
-//		(characterField.text <-> characterViewModel.characterString)
-//			.disposed(by: disposeBag)
-//	}
-
 	func navBarSetup() {
+
+		searchController.obscuresBackgroundDuringPresentation = false
+		searchController.searchBar.rx
+			.text
+			.orEmpty
+			.debounce(0.5, scheduler: MainScheduler.instance)
+			.bind(to: mountViewModel.searchTerm)
+			.disposed(by: disposeBag)
+		definesPresentationContext = true
+
+		// Clear search term if user cancels
+		searchController.rx
+			.delegate
+			.methodInvoked(#selector(UISearchControllerDelegate.didDismissSearchController(_:)))
+			.subscribe(onNext: clearSearchTerm)
+			.disposed(by: disposeBag)
+
+		navigationItem.searchController = searchController
+
+		let searchBar = searchController.searchBar
+		characterViewModel.faction
+			.subscribe(onNext: { faction in
+				searchBar.barTintColor = .white
+				searchBar.tintColor = faction.foregroundColor
+				let field = searchBar.findSearchField()
+				field?.textColor = faction.foregroundColor
+			})
+			.disposed(by: disposeBag)
 
 		// bind character name to navigation title
 		characterViewModel.characterName
@@ -156,6 +154,11 @@ class MountListViewController: UITableViewController {
 		// need to reset bar button item in order for the size to be set correctly
 		navigationItem.leftBarButtonItem = nil
 		navigationItem.leftBarButtonItem = barButton
+	}
+
+	private func clearSearchTerm(_ stream: [Any]) {
+		print("boop \(stream)")
+		mountViewModel.searchTerm.value = ""
 	}
 
 	private func presentCharacterSelect() {

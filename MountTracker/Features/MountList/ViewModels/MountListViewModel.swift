@@ -17,7 +17,7 @@ class MountListViewModel {
 
 	// MARK: - Properties
 	private let masterMounts: Variable<MasterMountListModel?> = Variable(nil)
-
+	public let searchTerm: Variable<String> = Variable("")
 
 	// MARK: - Observables
 	public let characterMounts: Observable<CharacterMountsModel?>
@@ -31,13 +31,19 @@ class MountListViewModel {
 
 		// Map dataSource to character and master lists
 		dataSource = Observable
-			.combineLatest(masterMounts.asObservable(), characterMounts)
-			.map({ (master, character) in
-				let masterList = master?.mounts ?? []
+			.combineLatest(masterMounts.asObservable(), characterMounts, searchTerm.asObservable())
+			.map({ (master, character, searchTerm) in
+				var masterList = master?.mounts ?? []
+				if !searchTerm.isEmpty {
+					masterList = masterList.filter { $0.name.contains(searchTerm) }
+				}
 				var result: [SectionModel<String, MountModel>] = []
 
 				if let character = character {
-					let characterList = character.mounts.collected
+					var characterList = character.mounts.collected
+					if !searchTerm.isEmpty {
+						characterList = characterList.filter { $0.name.contains(searchTerm) }
+					}
 
 					// Add collected mounts
 					result.append(SectionModel(
