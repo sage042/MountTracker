@@ -78,11 +78,13 @@ class MountListViewController: UITableViewController {
 
 	func navBarSetup() {
 
+		// bind search bar to searchTerm
 		searchController.obscuresBackgroundDuringPresentation = false
 		searchController.searchBar.rx
 			.text
 			.orEmpty
 			.debounce(0.5, scheduler: MainScheduler.instance)
+			.map { $0.lowercased() }
 			.bind(to: mountViewModel.searchTerm)
 			.disposed(by: disposeBag)
 		definesPresentationContext = true
@@ -96,6 +98,7 @@ class MountListViewController: UITableViewController {
 
 		navigationItem.searchController = searchController
 
+		// update search bar coloring
 		let searchBar = searchController.searchBar
 		characterViewModel.faction
 			.subscribe(onNext: { faction in
@@ -124,6 +127,7 @@ class MountListViewController: UITableViewController {
 			.subscribe(onNext: updateProfileButton)
 			.disposed(by: disposeBag)
 
+		// present character select on left bar click
 		if let navBarButton = navigationItem.leftBarButtonItem?.customView as? UIButton {
 			navBarButton.rx
 				.controlEvent(UIControlEvents.touchUpInside)
@@ -133,6 +137,7 @@ class MountListViewController: UITableViewController {
 	}
 
 	private func updateProfileButton(with thumbnail: UIImage?) {
+
 		guard let barButton = navigationItem.leftBarButtonItem,
 			let button: UIButton = barButton.customView as? UIButton else {
 			return
@@ -157,7 +162,6 @@ class MountListViewController: UITableViewController {
 	}
 
 	private func clearSearchTerm(_ stream: [Any]) {
-		print("boop \(stream)")
 		mountViewModel.searchTerm.value = ""
 	}
 

@@ -42,7 +42,7 @@ class MountListViewModel {
 				if let character = character {
 					var characterList = character.mounts.collected
 					if !searchTerm.isEmpty {
-						characterList = characterList.filter { $0.name.contains(searchTerm) }
+						characterList = characterList.filter { $0.name.lowercased().contains(searchTerm) }
 					}
 
 					// Add collected mounts
