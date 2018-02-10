@@ -15,16 +15,17 @@ struct PersistenceManager {
 	private let jsonEncoder = JSONEncoder()
 	private let jsonDecoder = JSONDecoder()
 
-	func save(_ object: String?, with key: String) {
-		UserDefaults.standard.setValue(object, forKey: key)
-		UserDefaults.standard.synchronize()
+	func save<T: Codable>(_ object: T, with key: String) {
+		let value = try? jsonEncoder.encode(object)
+		save(value: value, with: key)
 	}
 
-	func save<T: Codable>(_ object: T, with key: String) {
-		guard let value = try? jsonEncoder.encode(object) else {
-			return
+	func save(value: Any?, with key: String) {
+		if let value = value {
+			UserDefaults.standard.setValue(value, forKey: key)
+		} else {
+			UserDefaults.standard.removeObject(forKey: key)
 		}
-		UserDefaults.standard.setValue(value, forKey: key)
 		UserDefaults.standard.synchronize()
 	}
 

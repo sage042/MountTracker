@@ -13,13 +13,16 @@ import RxAlamofire
 class CharacterViewModel {
 
 	enum Keys: String {
-		case characterString, realmString
+		case characterString, realmString, characterMounts
 	}
 
 	private let disposeBag = DisposeBag()
 
 	// MARK: - Properties
-	private let _characterMounts: Variable<CharacterMountsModel?> = Variable(nil)
+	private var _characterMounts: Variable<CharacterMountsModel?> = {
+		let result: CharacterMountsModel? = PersistenceManager.main.load(with: Keys.characterMounts.rawValue)
+		return Variable(result)
+	}()
 	private let _thumbnail: Variable<UIImage?> = Variable(nil)
 	private let _anonymous: Variable<UIImage?> = Variable(nil)
 
@@ -59,10 +62,16 @@ class CharacterViewModel {
 		characterMounts
 			.subscribe(onNext: fetchThumbnail)
 			.disposed(by: disposeBag)
+
+		characterMounts
+			.subscribe(onNext: { character in
+				PersistenceManager.main.save(character, with: Keys.characterMounts.rawValue)
+			})
+			.disposed(by: disposeBag)
 	}
 
 	func fetchCharacterMounts(character: String?, realm: RealmModel?) {
-		PersistenceManager.main.save(character, with: Keys.characterString.rawValue)
+		PersistenceManager.main.save(value: character, with: Keys.characterString.rawValue)
 		PersistenceManager.main.save(realm, with: Keys.realmString.rawValue)
 
 		// if the character field is emptied force delete the character

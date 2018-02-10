@@ -19,4 +19,6 @@ extension UIFont {
 
 enum Glyph: String {
 	case user = "\u{e971}"
+	case sortDown = "\u{ea47}"
+	case sortUp = "\u{ea46}"
 }

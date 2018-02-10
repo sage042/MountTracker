@@ -8,11 +8,11 @@
 
 import Foundation
 
-enum Faction: Int, Decodable {
+enum Faction: Int, Codable {
 	case alliance, horde, neutral
 }
 
-struct CharacterMountsModel: Decodable {
+struct CharacterMountsModel: Codable {
 	var name: String
 	var realm: String
 	var faction: Faction
@@ -20,13 +20,13 @@ struct CharacterMountsModel: Decodable {
 	var thumbnail: String
 }
 
-struct MountListModel: Decodable {
+struct MountListModel: Codable {
 	var numCollected: Int
 	var numNotCollected: Int
 	var collected: [MountModel]
 }
 
-struct MountModel: Decodable, Hashable {
+struct MountModel: Codable, Hashable {
 	var name: String
 	var spellId: Int
 	var creatureId: Int

@@ -78,6 +78,8 @@ class MountListViewController: UITableViewController {
 
 	func navBarSetup() {
 
+		updateSectionOrderButton()
+
 		// bind search bar to searchTerm
 		searchController.obscuresBackgroundDuringPresentation = false
 		searchController.searchBar.rx
@@ -159,6 +161,39 @@ class MountListViewController: UITableViewController {
 		// need to reset bar button item in order for the size to be set correctly
 		navigationItem.leftBarButtonItem = nil
 		navigationItem.leftBarButtonItem = barButton
+	}
+
+	private func updateSectionOrderButton() {
+
+		let sortButton = UIBarButtonItem(
+			title: Glyph.sortDown.rawValue,
+			style: UIBarButtonItemStyle.plain,
+			target: nil,
+			action: nil)
+		sortButton.setTitleTextAttributes(
+			[NSAttributedStringKey.font: UIFont.glyph(size: 28),
+			 NSAttributedStringKey.foregroundColor: UIColor.black],
+			for: .normal)
+		sortButton.setTitleTextAttributes(
+			[NSAttributedStringKey.font: UIFont.glyph(size: 28)],
+			for: UIControlState.highlighted)
+
+		sortButton.rx
+			.tap
+			.scan(false) { (last, next) -> Bool in
+				return !last
+			}
+			.map(SortDirection.init)
+			.bind(to: mountViewModel.sortDirection)
+			.disposed(by: disposeBag)
+		mountViewModel.sortDirection
+			.asObservable()
+			.map { direction -> String in
+				direction.glyph
+			}
+			.bind(to: sortButton.rx.title)
+			.disposed(by: disposeBag)
+		navigationItem.rightBarButtonItem = sortButton
 	}
 
 	private func clearSearchTerm(_ stream: [Any]) {
