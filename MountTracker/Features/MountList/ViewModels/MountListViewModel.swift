@@ -46,9 +46,21 @@ class MountListViewModel {
 
 		self.characterMounts = characterMounts
 
+		let masterList = Observable
+			.combineLatest(masterMounts.asObservable().map { $0?.mounts ?? [] },
+						   searchTerm.asObservable())
+			.map(filterMount)
+
+		let characterList = Observable
+			.combineLatest(characterMounts.asObservable().map { $0?.mounts.collected ?? [] },
+						   searchTerm.asObservable())
+			.map(filterMount)
+
 		// Map dataSource to character and master lists
 		dataSource = Observable
-			.combineLatest(masterMounts.asObservable(), characterMounts, searchTerm.asObservable(), sortDirection.asObservable())
+			.combineLatest(masterList,
+						   characterList,
+						   sortDirection.asObservable())
 			.map(makeMountList)
 
 		collectedCount = characterMounts.map {
@@ -77,44 +89,36 @@ class MountListViewModel {
 	
 }
 
-private func makeMountList(master: MasterMountListModel?,
-						   character: CharacterMountsModel?,
-						   searchTerm: String,
-						   sortDirection: SortDirection) -> [SectionModel<String, MountModel>] {
+private func filterMount(list: [MountModel], searchTerm: String) -> [MountModel] {
+	guard !searchTerm.isEmpty else { return list }
+	return list.filter { $0.name.lowercased().contains(searchTerm) }
+}
 
-	var masterList = master?.mounts ?? []
-	// filter master list by search term
-	if !searchTerm.isEmpty {
-		masterList = masterList.filter { $0.name.lowercased().contains(searchTerm) }
-	}
+private func makeMountList(master: [MountModel],
+						   character: [MountModel],
+						   sortDirection: SortDirection) -> [SectionModel<String, MountModel>] {
 	var result: [SectionModel<String, MountModel>] = []
 
-	if let character = character {
-		var characterList = character.mounts.collected
-		// filter character list by search term
-		if !searchTerm.isEmpty {
-			characterList = characterList.filter { $0.name.lowercased().contains(searchTerm) }
-		}
-
+	if character.count > 0 {
 		// Add collected mounts
 		result.append(SectionModel(
-			model: "\(character.mounts.numCollected) Collected",
-			items: characterList))
+			model: "\(character.count) Collected",
+			items: character))
 
 		// if we have the masterlist, exclude the collected mounts
-		let neededSet = Set<MountModel>(masterList)
-			.subtracting(Set(characterList))
+		let neededSet = Set<MountModel>(master)
+			.subtracting(Set(character))
 		if neededSet.count > 0 {
 			result.append(SectionModel(
-				model: "\(character.mounts.numNotCollected) Needed",
+				model: "\(neededSet.count) Needed",
 				items: Array(neededSet)))
 		}
 	}
 	else {
 		// No character list, so display all mounts
 		result.append(SectionModel(
-			model: "\(masterList.count) Total",
-			items: masterList))
+			model: "\(master.count) Total",
+			items: master))
 	}
 
 	// reverse the order if bottomUp

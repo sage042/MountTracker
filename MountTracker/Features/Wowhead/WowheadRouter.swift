@@ -9,10 +9,10 @@
 import UIKit
 import SafariServices
 
-class WowheadRouter: Router<Int> {
+class WowheadRouter: Router<MountModel> {
 
-	override func present(from presenter: UIViewController, with injectables: Int) {
-		guard let url = URL(string: "https://www.wowhead.com/spell=\(injectables)") else {
+	override func present(from presenter: UIViewController, with injectables: MountModel) {
+		guard let url = Api.wowheadLink(spellId: injectables.spellId, itemId: injectables.itemId) else {
 			return
 		}
 		let webController = SFSafariViewController(url: url)

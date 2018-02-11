@@ -10,9 +10,9 @@ import UIKit
 
 class MountlistRouter: Router<Any> {
 
-	func presentWowhead(spellId: Int) {
+	func presentWowhead(mount: MountModel) {
 		guard let controller = controller else { return }
-		WowheadRouter().present(from: controller, with: spellId)
+		WowheadRouter().present(from: controller, with: mount)
 	}
 
 	func presentCharacterSelect(_ characterViewModel: CharacterViewModel) {

@@ -66,4 +66,14 @@ enum Api {
 		let urlString = baseUrl + "/realm/status?locale=en_US&apikey=\(secrets.blizzardKey)"
 		return URL(string: urlString)
 	}
+
+	static func wowheadLink(spellId: Int?, itemId: Int?) -> URL? {
+		if let itemId = itemId, itemId != 0 {
+			return URL(string: "https://www.wowhead.com/item=\(itemId)")
+		}
+		else if let spellId = spellId, spellId != 0 {
+			return URL(string: "https://www.wowhead.com/spell=\(spellId)")
+		}
+		return nil
+	}
 }

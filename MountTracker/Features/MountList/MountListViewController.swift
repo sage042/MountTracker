@@ -64,9 +64,7 @@ class MountListViewController: UITableViewController {
 
 		tableView.rx
 			.itemSelected
-			.map { indexPath in
-				return dataSource[indexPath].spellId
-			}
+			.map { dataSource[$0] }
 			.subscribe(onNext: router.presentWowhead)
 			.disposed(by: disposeBag)
 
