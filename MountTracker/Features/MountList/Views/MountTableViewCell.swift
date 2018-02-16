@@ -1,5 +1,5 @@
 //
-//  MountTableViewCell.swift
+//  MountCollectionViewCell.swift
 //  MountTracker
 //
 //  Created by Christopher Matsumoto on 1/31/18.
@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class MountTableViewCell: UITableViewCell, RxImageReceiver {
+class MountCollectionViewCell: UICollectionViewCell, RxImageReceiver {
 
 	@IBOutlet weak var iconImage: UIImageView!
 	@IBOutlet weak var nameLabel: UILabel!
@@ -19,12 +19,10 @@ class MountTableViewCell: UITableViewCell, RxImageReceiver {
 	
 	override func awakeFromNib() {
         super.awakeFromNib()
-    }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+		layer.cornerRadius = 4
     }
-
+	
 	func prepare(with model: MountModel) {
 		loadImage(Api.iconURL(model.icon),
 				  in: iconImage)

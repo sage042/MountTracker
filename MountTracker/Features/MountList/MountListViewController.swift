@@ -11,9 +11,25 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class MountListViewController: UITableViewController {
+class MountListViewController: UIViewController {
 
 	// MARK: - Properties
+
+	let gradientLayer: CAGradientLayer = {
+		let aLayer = CAGradientLayer()
+		aLayer.colors = [
+			UIColor(white: 1, alpha: 0.25).cgColor,
+			UIColor(white: 0, alpha: 0.25).cgColor
+		]
+		aLayer.locations = [
+			0.0,
+			1.0
+		]
+		return aLayer
+	}()
+
+	@IBOutlet var collectionView: UICollectionView!
+
 	let realmViewModel: RealmListViewModel = RealmListViewModel()
 	let characterViewModel: CharacterViewModel = CharacterViewModel()
 	lazy var mountViewModel: MountListViewModel = {
@@ -34,7 +50,10 @@ class MountListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		tableViewSetup()
+		gradientLayer.frame = view.bounds
+		view.layer.insertSublayer(gradientLayer, at: 0)
+
+		collectionViewSetup()
 		navBarSetup()
     }
 
@@ -45,33 +64,55 @@ class MountListViewController: UITableViewController {
 
 	// MARK: - RX Setup
 
-	/// Bind MountListViewModel.dataSource to tableView cells
-	func tableViewSetup() {
-		tableView.dataSource = nil
-		tableView.delegate = nil
-		tableView.rowHeight = 88
+	/// Bind MountListViewModel.dataSource to collectionView cells
+	func collectionViewSetup() {
+		collectionView.dataSource = nil
+		collectionView.delegate = nil
 
-		let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, MountModel>>(
-			configureCell: { (_, tv, indexPath, element) in
-				let cell = tv.dequeueReusableCell(withIdentifier: "MountTableViewCell", for: indexPath) as! MountTableViewCell
+		collectionView.register(MountCollectionViewCell.self)
+
+		collectionView.register(
+			MountHeaderCollectionReusableView.self,
+			forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
+
+		let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, MountModel>>(
+			configureCell: { (_, collectionView, indexPath, element) in
+				let cell = collectionView.dequeue(MountCollectionViewCell.self, for: indexPath)
 				cell.prepare(with: element)
 				return cell
 			},
-			titleForHeaderInSection: { dataSource, sectionIndex in
-				return dataSource[sectionIndex].model
+			configureSupplementaryView: { (ds, cv, kind, indexPath) in
+				let header = cv.dequeue(MountHeaderCollectionReusableView.self, ofKind: kind, for: indexPath)
+				header.title.text = ds[indexPath.section].model
+				return header
 			}
 		)
 
-		tableView.rx
+		collectionView.rx
 			.itemSelected
 			.map { dataSource[$0] }
 			.subscribe(onNext: router.presentWowhead)
 			.disposed(by: disposeBag)
 
+
 		// bind dataSource to MountTableViewCell items
 		mountViewModel.dataSource
-			.bind(to: tableView.rx.items(dataSource: dataSource))
+			.bind(to: collectionView.rx.items(dataSource: dataSource))
 			.disposed(by: disposeBag)
+
+		view.rx
+			.observe(CGRect.self, "bounds")
+			.subscribe(onNext: { [weak self] (frame) in
+				guard let frame = frame else { return }
+				let flow = UICollectionViewFlowLayout()
+				flow.headerReferenceSize = CGSize(width: frame.width, height: 26)
+				flow.itemSize = CGSize(width: frame.width - 28, height: 72)
+				flow.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+				self?.collectionView.setCollectionViewLayout(flow, animated: false)
+			})
+			.disposed(by: disposeBag)
+
+
 	}
 
 	func navBarSetup() {
@@ -100,12 +141,14 @@ class MountListViewController: UITableViewController {
 
 		// update search bar coloring
 		let searchBar = searchController.searchBar
+		let aView: UIView = view
 		characterViewModel.faction
 			.subscribe(onNext: { faction in
 				searchBar.barTintColor = .white
 				searchBar.tintColor = faction.foregroundColor
 				let field = searchBar.findSearchField()
 				field?.textColor = faction.foregroundColor
+				aView.backgroundColor = faction.backgroundColor
 			})
 			.disposed(by: disposeBag)
 

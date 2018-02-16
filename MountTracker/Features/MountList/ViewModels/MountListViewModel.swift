@@ -27,6 +27,8 @@ enum SortDirection {
 	}
 }
 
+typealias MountListSection = SectionModel<String, MountModel>
+
 class MountListViewModel {
 
 	private let disposeBag = DisposeBag()
@@ -38,7 +40,7 @@ class MountListViewModel {
 
 	// MARK: - Observables
 	public let characterMounts: Observable<CharacterMountsModel?>
-	public let dataSource: Observable<[SectionModel<String, MountModel>]>
+	public let dataSource: Observable<[MountListSection]>
 	public let collectedCount: Observable<Int>
 	public let neededCount: Observable<Int>
 

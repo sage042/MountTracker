@@ -22,7 +22,7 @@ extension Faction {
 		switch self {
 		case .alliance: return UIColor(red: 46/255, green: 73/255, blue: 148/255, alpha: 1)
 		case .horde: return UIColor(red: 183/255, green: 38/255, blue: 43/255, alpha: 1)
-		default: return UIColor.white
+		default: return UIColor(red: 47/255, green: 63/255, blue: 79/255, alpha: 1)
 		}
 	}
 
