@@ -51,7 +51,6 @@ func fetch<T: Codable>(to model: BehaviorSubject<T?>, dispose: DisposeBag) -> (U
 		requestData(request)
 			.map(response(to: T.self))
 			.catchErrorJustReturn(nil)
-			.debug("\(String(describing: T.self))")
 			.bind(to: model)
 			.disposed(by: dispose)
 	}

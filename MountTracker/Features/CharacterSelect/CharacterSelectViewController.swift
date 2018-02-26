@@ -107,6 +107,7 @@ class CharacterSelectViewController: UIViewController {
 		// Map character selection after login to characterSelect
 		characterViewModel.characterSelect
 			.map { $0?.name }
+			.filter { $0 != nil }
 			.bind(to: characterViewModel.characterString)
 			.disposed(by: disposeBag)
 
@@ -119,6 +120,7 @@ class CharacterSelectViewController: UIViewController {
 				}
 				return result
 			}
+			.filter { $0 != nil }
 			.bind(to: characterViewModel.realm)
 			.disposed(by: disposeBag)
 
@@ -147,14 +149,6 @@ class CharacterSelectViewController: UIViewController {
 		if let navBar = navigationController?.navigationBar {
 			characterViewModel.faction
 				.subscribe(onNext: navBar.color)
-				.disposed(by: disposeBag)
-		}
-
-		// Set back button color
-		if let button = navigationItem.leftBarButtonItem {
-			characterViewModel.faction
-				.map { $0.foregroundColor }
-				.subscribe(onNext: { button.tintColor = $0 })
 				.disposed(by: disposeBag)
 		}
 

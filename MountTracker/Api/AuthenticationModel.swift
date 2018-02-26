@@ -65,19 +65,16 @@ class AuthenticationModel {
 
 	init() {
 		code.asObserver()
-			.debug("authenticationCode")
 			.subscribe(onNext: {
 				Persistence.secure.save($0, with: Keys.authenticationCode.rawValue)
 			})
 			.disposed(by: disposeBag)
 		accessToken.asObserver()
-			.debug("accessToken")
 			.subscribe(onNext: {
 				Persistence.secure.save($0, with: Keys.accessToken.rawValue)
 			})
 			.disposed(by: disposeBag)
 		expiration.asObserver()
-			.debug("expiration")
 			.subscribe(onNext: {
 				var result: String? = nil
 				if let date = $0 {

@@ -36,7 +36,6 @@ class LoginViewController: UIViewController {
 		webView.navigationDelegate = self
 
 		viewModel.hasCode
-			.debug("hasCode")
 			.subscribe(onNext: { [weak self] in self?.handleCodeChange($0) })
 			.disposed(by: disposeBag)
     }

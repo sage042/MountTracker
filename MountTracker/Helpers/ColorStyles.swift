@@ -44,6 +44,7 @@ extension UINavigationBar {
 			.foregroundColor: faction.foregroundColor
 		]
 		barTintColor = faction.backgroundColor
+		tintColor = faction.foregroundColor
 	}
 }
 

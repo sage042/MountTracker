@@ -97,7 +97,6 @@ class CharacterListViewController: UIViewController {
 
 		view.rx
 			.observe(CGRect.self, "frame")
-			.debug("view bounds")
 			.subscribe(onNext: { [weak self] frame in
 				guard let frame = frame else { return }
 				let flow = UICollectionViewFlowLayout()
