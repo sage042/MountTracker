@@ -15,18 +15,7 @@ class MountListViewController: UIViewController {
 
 	// MARK: - Properties
 
-	let gradientLayer: CAGradientLayer = {
-		let aLayer = CAGradientLayer()
-		aLayer.colors = [
-			UIColor(white: 1, alpha: 0.25).cgColor,
-			UIColor(white: 0, alpha: 0.25).cgColor
-		]
-		aLayer.locations = [
-			0.0,
-			1.0
-		]
-		return aLayer
-	}()
+	let gradientLayer: CAGradientLayer = GradientLayer()
 
 	@IBOutlet var collectionView: UICollectionView!
 
@@ -37,8 +26,8 @@ class MountListViewController: UIViewController {
 	}()
 	let disposeBag: DisposeBag = DisposeBag()
 
-	lazy var router: MountlistRouter = {
-		return MountlistRouter(controller: self)
+	lazy var router: MountListRouter = {
+		return MountListRouter(controller: self)
 	}()
 
 	var searchController: UISearchController = {

@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		059FF9F2AFC9A262068626F4 /* Pods_MountTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9B1532937D615C04154767 /* Pods_MountTracker.framework */; };
+		08277EC8203891E200DC349D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277EC6203891E200DC349D /* LoginViewController.swift */; };
+		08277EC9203891E200DC349D /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08277EC7203891E200DC349D /* LoginViewController.xib */; };
+		08277ECC203891F700DC349D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277ECB203891F700DC349D /* LoginViewModel.swift */; };
+		08277ECF2038937800DC349D /* AuthenticationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277ECE2038937800DC349D /* AuthenticationModel.swift */; };
+		08277ED12038949600DC349D /* TimeUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277ED02038949600DC349D /* TimeUtilities.swift */; };
+		08277ED32038A55E00DC349D /* LoginApiFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277ED22038A55E00DC349D /* LoginApiFactories.swift */; };
+		08277ED520392AC000DC349D /* KeychainPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277ED420392AC000DC349D /* KeychainPersistence.swift */; };
 		0828637B202802B500A91D1D /* CharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0828637A202802B500A91D1D /* CharacterViewModel.swift */; };
 		08298EB8202AC678005E3612 /* WowheadRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298EB7202AC678005E3612 /* WowheadRouter.swift */; };
 		08298EBF202AD123005E3612 /* MountListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298EBE202AD123005E3612 /* MountListRouter.swift */; };
@@ -19,7 +26,7 @@
 		08298ECC202CCD53005E3612 /* CharacterSelectRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298ECB202CCD53005E3612 /* CharacterSelectRouter.swift */; };
 		08298ECE202CCDB9005E3612 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298ECD202CCDB9005E3612 /* Router.swift */; };
 		08298ED0202CEBB4005E3612 /* ColorStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08298ECF202CEBB4005E3612 /* ColorStyles.swift */; };
-		084C81922022E9C60003C66F /* MountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C81912022E9C60003C66F /* MountTableViewCell.swift */; };
+		084C81922022E9C60003C66F /* MountCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C81912022E9C60003C66F /* MountCollectionViewCell.swift */; };
 		0858899C2022E8D80045185C /* MountListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0858899B2022E8D80045185C /* MountListViewController.swift */; };
 		086A73112037819100157A34 /* MountHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086A730F2037819100157A34 /* MountHeaderCollectionReusableView.swift */; };
 		086A73122037819100157A34 /* MountHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 086A73102037819100157A34 /* MountHeaderCollectionReusableView.xib */; };
@@ -30,6 +37,13 @@
 		087826A220268A5F0039997C /* CharacterSelectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087826A120268A5F0039997C /* CharacterSelectionHeaderView.swift */; };
 		087826A42026B9C60039997C /* RealmListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087826A32026B9C60039997C /* RealmListModel.swift */; };
 		087826A62026D6C70039997C /* RealmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087826A52026D6C70039997C /* RealmViewModel.swift */; };
+		088BAF52203FF82900A99622 /* CharacterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088BAF50203FF82900A99622 /* CharacterListViewController.swift */; };
+		088BAF53203FF82900A99622 /* CharacterListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 088BAF51203FF82900A99622 /* CharacterListViewController.xib */; };
+		088BAF55203FF84700A99622 /* CharacterListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088BAF54203FF84700A99622 /* CharacterListRouter.swift */; };
+		088BAF57203FF86C00A99622 /* CharacterListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088BAF56203FF86C00A99622 /* CharacterListViewModel.swift */; };
+		088BAF5B203FFD9700A99622 /* CharacterListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088BAF5A203FFD9700A99622 /* CharacterListModel.swift */; };
+		088BAF5F2041425000A99622 /* CharacterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088BAF5D2041425000A99622 /* CharacterCollectionViewCell.swift */; };
+		088BAF602041425000A99622 /* CharacterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 088BAF5E2041425000A99622 /* CharacterCollectionViewCell.xib */; };
 		08A1F286202792B400CA1D08 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A1F285202792B400CA1D08 /* PersistenceManager.swift */; };
 		08A1F2882027B35000CA1D08 /* RxBidirectionalOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A1F2872027B35000CA1D08 /* RxBidirectionalOperator.swift */; };
 		08D6F6D52034D7C100D5ABBC /* MountCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08D6F6D42034D7C100D5ABBC /* MountCollectionViewCell.xib */; };
@@ -41,9 +55,17 @@
 		08D97B6E20266B6300C80927 /* ApiFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D97B6D20266B6300C80927 /* ApiFactories.swift */; };
 		08D97B7020267E5200C80927 /* Secret.json in Resources */ = {isa = PBXBuildFile; fileRef = 08D97B6F20267E5200C80927 /* Secret.json */; };
 		08D97B7220267E6300C80927 /* ExampleSecret.json in Resources */ = {isa = PBXBuildFile; fileRef = 08D97B7120267E6300C80927 /* ExampleSecret.json */; };
+		08E6062D203A1CD000661CC9 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E6062C203A1CD000661CC9 /* LoginRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		08277EC6203891E200DC349D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		08277EC7203891E200DC349D /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		08277ECB203891F700DC349D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		08277ECE2038937800DC349D /* AuthenticationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationModel.swift; sourceTree = "<group>"; };
+		08277ED02038949600DC349D /* TimeUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtilities.swift; sourceTree = "<group>"; };
+		08277ED22038A55E00DC349D /* LoginApiFactories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginApiFactories.swift; sourceTree = "<group>"; };
+		08277ED420392AC000DC349D /* KeychainPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainPersistence.swift; sourceTree = "<group>"; };
 		0828637A202802B500A91D1D /* CharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewModel.swift; sourceTree = "<group>"; };
 		08298EB7202AC678005E3612 /* WowheadRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WowheadRouter.swift; sourceTree = "<group>"; };
 		08298EBE202AD123005E3612 /* MountListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountListRouter.swift; sourceTree = "<group>"; };
@@ -55,7 +77,7 @@
 		08298ECB202CCD53005E3612 /* CharacterSelectRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSelectRouter.swift; sourceTree = "<group>"; };
 		08298ECD202CCDB9005E3612 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		08298ECF202CEBB4005E3612 /* ColorStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStyles.swift; sourceTree = "<group>"; };
-		084C81912022E9C60003C66F /* MountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountTableViewCell.swift; sourceTree = "<group>"; };
+		084C81912022E9C60003C66F /* MountCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountCollectionViewCell.swift; sourceTree = "<group>"; };
 		0858899B2022E8D80045185C /* MountListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountListViewController.swift; sourceTree = "<group>"; };
 		086A730F2037819100157A34 /* MountHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		086A73102037819100157A34 /* MountHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MountHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
@@ -68,6 +90,13 @@
 		087826A120268A5F0039997C /* CharacterSelectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSelectionHeaderView.swift; sourceTree = "<group>"; };
 		087826A32026B9C60039997C /* RealmListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmListModel.swift; sourceTree = "<group>"; };
 		087826A52026D6C70039997C /* RealmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmViewModel.swift; sourceTree = "<group>"; };
+		088BAF50203FF82900A99622 /* CharacterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListViewController.swift; sourceTree = "<group>"; };
+		088BAF51203FF82900A99622 /* CharacterListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterListViewController.xib; sourceTree = "<group>"; };
+		088BAF54203FF84700A99622 /* CharacterListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListRouter.swift; sourceTree = "<group>"; };
+		088BAF56203FF86C00A99622 /* CharacterListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListViewModel.swift; sourceTree = "<group>"; };
+		088BAF5A203FFD9700A99622 /* CharacterListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListModel.swift; sourceTree = "<group>"; };
+		088BAF5D2041425000A99622 /* CharacterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionViewCell.swift; sourceTree = "<group>"; };
+		088BAF5E2041425000A99622 /* CharacterCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterCollectionViewCell.xib; sourceTree = "<group>"; };
 		08A1F285202792B400CA1D08 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		08A1F2872027B35000CA1D08 /* RxBidirectionalOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBidirectionalOperator.swift; sourceTree = "<group>"; };
 		08D6F6D42034D7C100D5ABBC /* MountCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MountCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -79,6 +108,7 @@
 		08D97B6D20266B6300C80927 /* ApiFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiFactories.swift; sourceTree = "<group>"; };
 		08D97B6F20267E5200C80927 /* Secret.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Secret.json; sourceTree = "<group>"; };
 		08D97B7120267E6300C80927 /* ExampleSecret.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ExampleSecret.json; sourceTree = "<group>"; };
+		08E6062C203A1CD000661CC9 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
 		205CB6773445CED5889DD300 /* Pods-MountTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MountTracker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MountTracker/Pods-MountTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		5E9B1532937D615C04154767 /* Pods_MountTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MountTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC58A89923E7F7018DB0A361 /* Pods-MountTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MountTracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-MountTracker/Pods-MountTracker.release.xcconfig"; sourceTree = "<group>"; };
@@ -96,6 +126,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08277EC5203891A100DC349D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				08277ECD2038935C00DC349D /* Models */,
+				08277ECA203891E500DC349D /* ViewModels */,
+				08277EC6203891E200DC349D /* LoginViewController.swift */,
+				08277EC7203891E200DC349D /* LoginViewController.xib */,
+				08E6062C203A1CD000661CC9 /* LoginRouter.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		08277ECA203891E500DC349D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				08277ECB203891F700DC349D /* LoginViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		08277ECD2038935C00DC349D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		08298EBD202ACFEE005E3612 /* Wowhead */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,7 +184,9 @@
 		085889992022E8A40045185C /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				08277EC5203891A100DC349D /* Login */,
 				08298EC4202CB88A005E3612 /* CharacterSelect */,
+				088BAF4F203FF7C500A99622 /* CharacterList */,
 				08298EBD202ACFEE005E3612 /* Wowhead */,
 				0858899A2022E8B90045185C /* MountList */,
 			);
@@ -192,7 +251,7 @@
 		087826A82026D6E10039997C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				084C81912022E9C60003C66F /* MountTableViewCell.swift */,
+				084C81912022E9C60003C66F /* MountCollectionViewCell.swift */,
 				08D6F6D42034D7C100D5ABBC /* MountCollectionViewCell.xib */,
 				087826A120268A5F0039997C /* CharacterSelectionHeaderView.swift */,
 				086A730F2037819100157A34 /* MountHeaderCollectionReusableView.swift */,
@@ -201,10 +260,49 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		088BAF4F203FF7C500A99622 /* CharacterList */ = {
+			isa = PBXGroup;
+			children = (
+				088BAF58203FFD5D00A99622 /* Models */,
+				088BAF59203FFD6900A99622 /* ViewModels */,
+				088BAF5C2041412D00A99622 /* Views */,
+				088BAF50203FF82900A99622 /* CharacterListViewController.swift */,
+				088BAF51203FF82900A99622 /* CharacterListViewController.xib */,
+				088BAF54203FF84700A99622 /* CharacterListRouter.swift */,
+			);
+			path = CharacterList;
+			sourceTree = "<group>";
+		};
+		088BAF58203FFD5D00A99622 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				088BAF5A203FFD9700A99622 /* CharacterListModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		088BAF59203FFD6900A99622 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				088BAF56203FF86C00A99622 /* CharacterListViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		088BAF5C2041412D00A99622 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				088BAF5D2041425000A99622 /* CharacterCollectionViewCell.swift */,
+				088BAF5E2041425000A99622 /* CharacterCollectionViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		08A1F284202792A800CA1D08 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
 				08A1F285202792B400CA1D08 /* PersistenceManager.swift */,
+				08277ED420392AC000DC349D /* KeychainPersistence.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -219,6 +317,7 @@
 				08D6F6D62034DADF00D5ABBC /* CollectionViewHelpers.swift */,
 				08298ECD202CCDB9005E3612 /* Router.swift */,
 				08298ECF202CEBB4005E3612 /* ColorStyles.swift */,
+				08277ED02038949600DC349D /* TimeUtilities.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -236,6 +335,8 @@
 		08D97B6C20266B1800C80927 /* Api */ = {
 			isa = PBXGroup;
 			children = (
+				08277ECE2038937800DC349D /* AuthenticationModel.swift */,
+				08277ED22038A55E00DC349D /* LoginApiFactories.swift */,
 				08D97B6D20266B6300C80927 /* ApiFactories.swift */,
 				08D97B6F20267E5200C80927 /* Secret.json */,
 				08D97B7120267E6300C80927 /* ExampleSecret.json */,
@@ -322,14 +423,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08277EC9203891E200DC349D /* LoginViewController.xib in Resources */,
 				08747741202269E60038D55C /* LaunchScreen.storyboard in Resources */,
 				08D97B7020267E5200C80927 /* Secret.json in Resources */,
 				0874773E202269E60038D55C /* Assets.xcassets in Resources */,
+				088BAF602041425000A99622 /* CharacterCollectionViewCell.xib in Resources */,
 				08298EC3202B9846005E3612 /* icomoon.ttf in Resources */,
 				0874773C202269E60038D55C /* Main.storyboard in Resources */,
 				08D97B7220267E6300C80927 /* ExampleSecret.json in Resources */,
 				08D6F6D52034D7C100D5ABBC /* MountCollectionViewCell.xib in Resources */,
 				086A73122037819100157A34 /* MountHeaderCollectionReusableView.xib in Resources */,
+				088BAF53203FF82900A99622 /* CharacterListViewController.xib in Resources */,
 				08298EC8202CBB24005E3612 /* CharacterSelectViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,6 +450,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-MountTracker/Pods-MountTracker-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
@@ -355,6 +460,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
@@ -408,26 +514,38 @@
 				086A73112037819100157A34 /* MountHeaderCollectionReusableView.swift in Sources */,
 				08298EBF202AD123005E3612 /* MountListRouter.swift in Sources */,
 				087826A220268A5F0039997C /* CharacterSelectionHeaderView.swift in Sources */,
+				088BAF55203FF84700A99622 /* CharacterListRouter.swift in Sources */,
 				0858899C2022E8D80045185C /* MountListViewController.swift in Sources */,
 				08D97B6E20266B6300C80927 /* ApiFactories.swift in Sources */,
+				08277ECF2038937800DC349D /* AuthenticationModel.swift in Sources */,
 				08A1F286202792B400CA1D08 /* PersistenceManager.swift in Sources */,
 				08298EC1202B9817005E3612 /* FontUtilities.swift in Sources */,
 				08D97B6B2026659E00C80927 /* UIImageViewHelper.swift in Sources */,
+				08277ECC203891F700DC349D /* LoginViewModel.swift in Sources */,
 				08298EB8202AC678005E3612 /* WowheadRouter.swift in Sources */,
+				088BAF5F2041425000A99622 /* CharacterCollectionViewCell.swift in Sources */,
 				087826A62026D6C70039997C /* RealmViewModel.swift in Sources */,
+				088BAF52203FF82900A99622 /* CharacterListViewController.swift in Sources */,
+				08277ED32038A55E00DC349D /* LoginApiFactories.swift in Sources */,
 				08D97B61202505C600C80927 /* CharacterMountsModel.swift in Sources */,
 				08298ECE202CCDB9005E3612 /* Router.swift in Sources */,
 				08A1F2882027B35000CA1D08 /* RxBidirectionalOperator.swift in Sources */,
+				08277EC8203891E200DC349D /* LoginViewController.swift in Sources */,
 				0828637B202802B500A91D1D /* CharacterViewModel.swift in Sources */,
 				08298ECC202CCD53005E3612 /* CharacterSelectRouter.swift in Sources */,
 				08298EC7202CBB24005E3612 /* CharacterSelectViewController.swift in Sources */,
 				08298ED0202CEBB4005E3612 /* ColorStyles.swift in Sources */,
+				088BAF5B203FFD9700A99622 /* CharacterListModel.swift in Sources */,
 				08747737202269E60038D55C /* AppDelegate.swift in Sources */,
+				08277ED12038949600DC349D /* TimeUtilities.swift in Sources */,
+				08277ED520392AC000DC349D /* KeychainPersistence.swift in Sources */,
+				08E6062D203A1CD000661CC9 /* LoginRouter.swift in Sources */,
 				08D6F6D72034DADF00D5ABBC /* CollectionViewHelpers.swift in Sources */,
 				08D97B6820258BB900C80927 /* MountMasterList.swift in Sources */,
 				087826A42026B9C60039997C /* RealmListModel.swift in Sources */,
+				088BAF57203FF86C00A99622 /* CharacterListViewModel.swift in Sources */,
 				08D97B66202509F900C80927 /* MountListViewModel.swift in Sources */,
-				084C81922022E9C60003C66F /* MountTableViewCell.swift in Sources */,
+				084C81922022E9C60003C66F /* MountCollectionViewCell.swift in Sources */,
 				08298ECA202CBB39005E3612 /* Identifiable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

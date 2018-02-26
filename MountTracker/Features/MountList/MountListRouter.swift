@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MountlistRouter: Router<Any> {
+class MountListRouter: Router<Any> {
 
 	func presentWowhead(mount: MountModel) {
 		guard let controller = controller else { return }

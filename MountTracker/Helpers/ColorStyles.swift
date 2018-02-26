@@ -61,4 +61,17 @@ extension UISearchBar {
 	}
 }
 
+public func GradientLayer() -> CAGradientLayer {
+	let aLayer = CAGradientLayer()
+	aLayer.colors = [
+		UIColor(white: 1, alpha: 0.3).cgColor,
+		UIColor(white: 0, alpha: 0.3).cgColor
+	]
+	aLayer.locations = [
+		0.0,
+		1.0
+	]
+	return aLayer
+}
+
 

@@ -10,15 +10,15 @@ import Foundation
 import RxSwift
 import RxAlamofire
 
-class RealmListViewModel {
+final class RealmListViewModel {
 
 	private enum Keys: String {
 		case realmList
 	}
 
 	// MARK: - Properties
-	private let realmList: Variable<RealmListModel?> = {
-		let value: RealmListModel? = PersistenceManager.main.load(with: Keys.realmList.rawValue)
+	public let realmList: Variable<RealmListModel?> = {
+		let value: RealmListModel? = Persistence.main.load(with: Keys.realmList.rawValue)
 		return Variable(value)
 	}()
 	private let disposeBag = DisposeBag()
@@ -38,9 +38,9 @@ class RealmListViewModel {
 		}
 
 		requestData(.get, url)
-			.subscribe(onNext: { [unowned self] (r, data) in
-				self.realmList.value = try? JSONDecoder().decode(RealmListModel.self, from: data)
-			})
+			.map(response(to: RealmListModel.self))
+			.catchErrorJustReturn(nil)
+			.bind(to: realmList)
 			.disposed(by: disposeBag)
 	}
 

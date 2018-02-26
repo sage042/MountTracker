@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxAlamofire
 
-class CharacterViewModel {
+final class CharacterViewModel {
 
 	enum Keys: String {
 		case characterString, realmString, characterMounts
@@ -20,19 +20,24 @@ class CharacterViewModel {
 
 	// MARK: - Properties
 	private var _characterMounts: Variable<CharacterMountsModel?> = {
-		let result: CharacterMountsModel? = PersistenceManager.main.load(with: Keys.characterMounts.rawValue)
+		let result: CharacterMountsModel? = Persistence.main.load(with: Keys.characterMounts.rawValue)
 		return Variable(result)
 	}()
 	private let _thumbnail: Variable<UIImage?> = Variable(nil)
 	private let _anonymous: Variable<UIImage?> = Variable(nil)
 
 	public let realm: Variable<RealmModel?> = {
-		let realm: RealmModel? = PersistenceManager.main.load(with: Keys.realmString.rawValue)
+		let realm: RealmModel? = Persistence.main.load(with: Keys.realmString.rawValue)
 		return Variable(realm)
 	}()
 	public let characterString: Variable<String?> = {
-		let character: String? = PersistenceManager.main.load(with: Keys.characterString.rawValue)
+		let character: String? = Persistence.main.load(with: Keys.characterString.rawValue)
 		return Variable(character)
+	}()
+
+	public let authentication = AuthenticationModel()
+	public let characterSelect: BehaviorSubject<CharacterModel?> = {
+		return BehaviorSubject(value: nil)
 	}()
 
 	// MARK: - Observables
@@ -53,10 +58,23 @@ class CharacterViewModel {
 
 		// observe changes to selected character and realm
 		// fetch characterMounts every 0.5 seconds
-		Observable
+		let charRealm = Observable
 			.combineLatest(characterString.asObservable(), realm.asObservable())
 			.debounce(0.5, scheduler: MainScheduler.instance)
-			.subscribe(onNext: fetchCharacterMounts)
+
+		// Save selections on change
+		charRealm
+			.subscribe(onNext: { (character, realm) in
+				Persistence.main.save(character, with: Keys.characterString.rawValue)
+				Persistence.main.save(realm, with: Keys.realmString.rawValue)
+			})
+			.disposed(by: disposeBag)
+
+		// fetch character on change
+		charRealm
+			.map { ($0.0, $0.1?.slug) }
+			.map(Api.mounts)
+			.subscribe(onNext: fetch(to: _characterMounts, dispose: disposeBag))
 			.disposed(by: disposeBag)
 
 		characterMounts
@@ -65,27 +83,7 @@ class CharacterViewModel {
 
 		characterMounts
 			.subscribe(onNext: { character in
-				PersistenceManager.main.save(character, with: Keys.characterMounts.rawValue)
-			})
-			.disposed(by: disposeBag)
-	}
-
-	func fetchCharacterMounts(character: String?, realm: RealmModel?) {
-		PersistenceManager.main.save(value: character, with: Keys.characterString.rawValue)
-		PersistenceManager.main.save(realm, with: Keys.realmString.rawValue)
-
-		// if the character field is emptied force delete the character
-		if (character ?? "").isEmpty {
-			self._characterMounts.value = nil
-		}
-
-		guard let url = Api.mounts(character: character, realm: realm?.slug) else {
-			return
-		}
-
-		requestData(.get, url)
-			.subscribe(onNext: { [unowned self] (r, data) in
-				self._characterMounts.value = try? JSONDecoder().decode(CharacterMountsModel.self, from: data)
+				Persistence.main.save(character, with: Keys.characterMounts.rawValue)
 			})
 			.disposed(by: disposeBag)
 	}
@@ -114,3 +112,4 @@ class CharacterViewModel {
 	}
 
 }
+

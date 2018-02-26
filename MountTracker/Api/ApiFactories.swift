@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 /// Secret Keys for api access are saved to a resource file named Secret.json
 /// Secret.json is git ignored, please generate and store your own keys
@@ -15,6 +16,7 @@ struct SecretKeys: Decodable {
 
 	/// Obtained through Mashery account at http://dev.battle.net
 	let blizzardKey: String
+	let blizzardSecret: String
 }
 
 enum Api {
@@ -75,5 +77,15 @@ enum Api {
 			return URL(string: "https://www.wowhead.com/spell=\(spellId)")
 		}
 		return nil
+	}
+
+	static func profile(accessToken: String?) -> URLRequest? {
+		guard let accessToken = accessToken,
+			let url = URL(string: baseUrl + "/user/characters"),
+			let request = try? URLRequest(url: url, method: .get)
+			else { return nil }
+		let result = try? URLEncoding.queryString
+			.encode(request, with: ["access_token": accessToken])
+		return result
 	}
 }

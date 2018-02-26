@@ -29,7 +29,7 @@ enum SortDirection {
 
 typealias MountListSection = SectionModel<String, MountModel>
 
-class MountListViewModel {
+final class MountListViewModel {
 
 	private let disposeBag = DisposeBag()
 

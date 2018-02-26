@@ -10,7 +10,7 @@ import UIKit
 
 class Router <Injectables> {
 
-	var controller: UIViewController?
+	weak var controller: UIViewController?
 
 	init(controller: UIViewController? = nil) {
 		self.controller = controller
@@ -18,4 +18,13 @@ class Router <Injectables> {
 
 	func present(from presenter: UIViewController, with injectables: Injectables) {}
 
+	func dismiss(animated: Bool = true) {
+		controller?.dismiss(animated: animated)
+	}
+
+	func pop(animated: Bool = true) {
+		controller?.dismiss(animated: animated)
+	}
+
 }
+

@@ -14,9 +14,12 @@ class CharacterSelectViewController: UIViewController {
 
 	// MARK: - Properties
 
+	let gradientLayer: CAGradientLayer = GradientLayer()
+
 	@IBOutlet weak var characterField: UITextField!
 	@IBOutlet weak var realmField: UITextField!
 	@IBOutlet weak var imageView: UIImageView!
+	@IBOutlet weak var loginButton: UIButton!
 
 	private let characterViewModel: CharacterViewModel
 	private let realmViewModel: RealmListViewModel = RealmListViewModel()
@@ -39,11 +42,14 @@ class CharacterSelectViewController: UIViewController {
 		return toolbar
 	}()
 
+	private let router: CharacterSelectRouter
+
 	private let disposeBag: DisposeBag = DisposeBag()
 
 	// MARK: - Lifecycle
 
-	init(_ characterViewModel: CharacterViewModel) {
+	init(_ characterViewModel: CharacterViewModel, router: CharacterSelectRouter) {
+		self.router = router
 		self.characterViewModel = characterViewModel
 		super.init(nibName: CharacterSelectViewController.identifier, bundle: nil)
 	}
@@ -55,6 +61,9 @@ class CharacterSelectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+		gradientLayer.frame = view.bounds
+		view.layer.insertSublayer(gradientLayer, at: 0)
+
 		realmField.inputView = pickerView
 		characterField.inputAccessoryView = inputToolbar
 		realmField.inputAccessoryView = inputToolbar
@@ -62,6 +71,7 @@ class CharacterSelectViewController: UIViewController {
 		fieldSetup()
 		portraitSetup()
 		navBarSetup()
+		buttonSetup()
 
 		realmViewModel.fetch()
 		characterViewModel.fetchAnonymousThumbnail()
@@ -93,6 +103,25 @@ class CharacterSelectViewController: UIViewController {
 		// bidirectional update between characterField and character view model
 		(characterField.rx.text <-> characterViewModel.characterString)
 			.disposed(by: disposeBag)
+
+		// Map character selection after login to characterSelect
+		characterViewModel.characterSelect
+			.map { $0?.name }
+			.bind(to: characterViewModel.characterString)
+			.disposed(by: disposeBag)
+
+		characterViewModel.characterSelect
+			.map { $0?.realm }
+			.map { [unowned self] (realm) -> RealmModel? in
+				guard let realm = realm else { return nil }
+				let result = self.realmViewModel.realmList.value?.realms.first {
+					$0.name == realm
+				}
+				return result
+			}
+			.bind(to: characterViewModel.realm)
+			.disposed(by: disposeBag)
+
 	}
 
 	func portraitSetup() {
@@ -128,6 +157,13 @@ class CharacterSelectViewController: UIViewController {
 				.subscribe(onNext: { button.tintColor = $0 })
 				.disposed(by: disposeBag)
 		}
+
+		let aView: UIView = view
+		characterViewModel.faction
+			.subscribe(onNext: { faction in
+				aView.backgroundColor = faction.backgroundColor
+			})
+			.disposed(by: disposeBag)
 	}
 
 	// MARK: - Methods
@@ -138,6 +174,29 @@ class CharacterSelectViewController: UIViewController {
 
 	@objc func dismissView() {
 		self.dismiss(animated: true)
+	}
+
+	@objc @IBAction func login() {
+		router.presentLogin((auth: characterViewModel.authentication,
+							 selection: characterViewModel.characterSelect))
+	}
+
+	func buttonSetup() {
+		let injectables: LoginFlowModel = (auth: characterViewModel.authentication,
+						  selection: characterViewModel.characterSelect)
+		loginButton.rx
+			.tap
+			.subscribe { [weak self] _ in
+				if	let result = try? injectables.auth.accessToken.value(),
+					let token: String = result,
+					!token.isEmpty {
+					self?.router.presentCharacterList(injectables)
+				}
+				else {
+					self?.router.presentLogin(injectables)
+				}
+			}
+			.disposed(by: disposeBag)
 	}
 
 }
