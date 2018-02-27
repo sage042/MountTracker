@@ -64,7 +64,6 @@ final class CharacterViewModel {
 
 		// Save selections on change
 		charRealm
-			.debug("charRealm")
 			.subscribe(onNext: { (character, realm) in
 				Persistence.main.save(character, with: Keys.characterString.rawValue)
 				Persistence.main.save(realm, with: Keys.realmString.rawValue)

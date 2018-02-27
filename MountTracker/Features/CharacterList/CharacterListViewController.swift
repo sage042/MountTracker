@@ -21,6 +21,7 @@ class CharacterListViewController: UIViewController {
 	private let router: CharacterListRouter
 
 	@IBOutlet weak var collectionView: UICollectionView!
+	@IBOutlet weak var activitySpinner: UIActivityIndicatorView!
 
 	var disposeBag: DisposeBag = DisposeBag()
 
@@ -38,6 +39,7 @@ class CharacterListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		activitySpinner.startAnimating()
 
 		collectionViewSetup()
 
@@ -93,6 +95,16 @@ class CharacterListViewController: UIViewController {
 		viewModel.characters
 			.map { [SectionModel(model: "Characters", items: $0)] }
 			.bind(to: collectionView.rx.items(dataSource: dataSource))
+			.disposed(by: disposeBag)
+
+		var count = 0
+		viewModel.characterList.asObservable()
+			.subscribe(onNext: { [weak self] item in
+				count += 1
+				if count > 3 || item != nil {
+					self?.activitySpinner.stopAnimating()
+				}
+			})
 			.disposed(by: disposeBag)
 
 		view.rx

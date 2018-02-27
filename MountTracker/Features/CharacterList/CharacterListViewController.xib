@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CharacterListViewController" customModule="MountTracker" customModuleProvider="target">
             <connections>
+                <outlet property="activitySpinner" destination="PmQ-QV-SgX" id="3Kg-3O-Jkr"/>
                 <outlet property="collectionView" destination="q6r-AK-Ebm" id="ctT-ED-KX1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,6 +22,9 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="PmQ-QV-SgX">
+                    <rect key="frame" x="169" y="315" width="37" height="37"/>
+                </activityIndicatorView>
                 <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="q6r-AK-Ebm">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -34,6 +38,8 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="PmQ-QV-SgX" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Bw7-H0-rhC"/>
+                <constraint firstItem="PmQ-QV-SgX" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="Idc-1H-01Q"/>
                 <constraint firstItem="q6r-AK-Ebm" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="cM3-pc-kKk"/>
                 <constraint firstItem="q6r-AK-Ebm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fyM-fo-UOT"/>
                 <constraint firstItem="q6r-AK-Ebm" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gbp-Di-n2V"/>

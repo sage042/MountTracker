@@ -108,6 +108,8 @@ class MountListViewController: UIViewController {
 
 		updateSectionOrderButton()
 
+		navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+
 		// bind search bar to searchTerm
 		searchController.obscuresBackgroundDuringPresentation = false
 		searchController.searchBar.rx

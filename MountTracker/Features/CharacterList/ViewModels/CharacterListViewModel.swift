@@ -12,7 +12,7 @@ import RxSwift
 class CharacterListViewModel {
 
 	private let authentication: AuthenticationModel
-	private let characterList: BehaviorSubject<CharacterListModel?> = {
+	public let characterList: BehaviorSubject<CharacterListModel?> = {
 		return BehaviorSubject(value: nil)
 	}()
 
