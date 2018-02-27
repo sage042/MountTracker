@@ -61,8 +61,22 @@ class CharacterSelectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		gradientLayer.frame = view.bounds
+		gradientLayer.frame = view.frame
 		view.layer.insertSublayer(gradientLayer, at: 0)
+
+		let info = UIBarButtonItem(
+			title: Glyph.info.rawValue,
+			style: .plain,
+			target: router,
+			action: #selector(CharacterSelectRouter.presentInfo))
+		info.setTitleTextAttributes(
+			[NSAttributedStringKey.font: UIFont.glyph(size: 18),
+			 NSAttributedStringKey.foregroundColor: UIColor.black],
+			for: .normal)
+		info.setTitleTextAttributes(
+			[NSAttributedStringKey.font: UIFont.glyph(size: 18)],
+			for: UIControlState.highlighted)
+		navigationItem.rightBarButtonItem = info
 
 		realmField.inputView = pickerView
 		characterField.inputAccessoryView = inputToolbar
@@ -76,6 +90,12 @@ class CharacterSelectViewController: UIViewController {
 		realmViewModel.fetch()
 		characterViewModel.fetchAnonymousThumbnail()
     }
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		gradientLayer.frame = view.frame
+	}
 
 	func fieldSetup() {
 

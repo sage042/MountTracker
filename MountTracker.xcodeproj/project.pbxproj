@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		059FF9F2AFC9A262068626F4 /* Pods_MountTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9B1532937D615C04154767 /* Pods_MountTracker.framework */; };
+		0811641720452D7600DF6933 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811641520452D7600DF6933 /* InfoViewController.swift */; };
+		0811641820452D7600DF6933 /* InfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0811641620452D7600DF6933 /* InfoViewController.xib */; };
+		0811641A2045304A00DF6933 /* Info.html in Resources */ = {isa = PBXBuildFile; fileRef = 081164192045304A00DF6933 /* Info.html */; };
+		0811641C2045335700DF6933 /* InfoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0811641B2045335700DF6933 /* InfoRouter.swift */; };
 		08277EC8203891E200DC349D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277EC6203891E200DC349D /* LoginViewController.swift */; };
 		08277EC9203891E200DC349D /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08277EC7203891E200DC349D /* LoginViewController.xib */; };
 		08277ECC203891F700DC349D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08277ECB203891F700DC349D /* LoginViewModel.swift */; };
@@ -59,6 +63,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0811641520452D7600DF6933 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		0811641620452D7600DF6933 /* InfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoViewController.xib; sourceTree = "<group>"; };
+		081164192045304A00DF6933 /* Info.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Info.html; sourceTree = "<group>"; };
+		0811641B2045335700DF6933 /* InfoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoRouter.swift; sourceTree = "<group>"; };
 		08277EC6203891E200DC349D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		08277EC7203891E200DC349D /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		08277ECB203891F700DC349D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -126,6 +134,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0811641420452D5500DF6933 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				081164192045304A00DF6933 /* Info.html */,
+				0811641520452D7600DF6933 /* InfoViewController.swift */,
+				0811641620452D7600DF6933 /* InfoViewController.xib */,
+				0811641B2045335700DF6933 /* InfoRouter.swift */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
 		08277EC5203891A100DC349D /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +203,7 @@
 		085889992022E8A40045185C /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				0811641420452D5500DF6933 /* Info */,
 				08277EC5203891A100DC349D /* Login */,
 				08298EC4202CB88A005E3612 /* CharacterSelect */,
 				088BAF4F203FF7C500A99622 /* CharacterList */,
@@ -425,9 +445,11 @@
 			files = (
 				08277EC9203891E200DC349D /* LoginViewController.xib in Resources */,
 				08747741202269E60038D55C /* LaunchScreen.storyboard in Resources */,
+				0811641820452D7600DF6933 /* InfoViewController.xib in Resources */,
 				08D97B7020267E5200C80927 /* Secret.json in Resources */,
 				0874773E202269E60038D55C /* Assets.xcassets in Resources */,
 				088BAF602041425000A99622 /* CharacterCollectionViewCell.xib in Resources */,
+				0811641A2045304A00DF6933 /* Info.html in Resources */,
 				08298EC3202B9846005E3612 /* icomoon.ttf in Resources */,
 				0874773C202269E60038D55C /* Main.storyboard in Resources */,
 				08D97B7220267E6300C80927 /* ExampleSecret.json in Resources */,
@@ -511,6 +533,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0811641C2045335700DF6933 /* InfoRouter.swift in Sources */,
 				086A73112037819100157A34 /* MountHeaderCollectionReusableView.swift in Sources */,
 				08298EBF202AD123005E3612 /* MountListRouter.swift in Sources */,
 				087826A220268A5F0039997C /* CharacterSelectionHeaderView.swift in Sources */,
@@ -533,6 +556,7 @@
 				08277EC8203891E200DC349D /* LoginViewController.swift in Sources */,
 				0828637B202802B500A91D1D /* CharacterViewModel.swift in Sources */,
 				08298ECC202CCD53005E3612 /* CharacterSelectRouter.swift in Sources */,
+				0811641720452D7600DF6933 /* InfoViewController.swift in Sources */,
 				08298EC7202CBB24005E3612 /* CharacterSelectViewController.swift in Sources */,
 				08298ED0202CEBB4005E3612 /* ColorStyles.swift in Sources */,
 				088BAF5B203FFD9700A99622 /* CharacterListModel.swift in Sources */,

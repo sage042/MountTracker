@@ -31,4 +31,10 @@ class CharacterSelectRouter: Router<CharacterViewModel> {
 		router.present(from: controller, with: injectables)
 	}
 
+	@objc func presentInfo() {
+		guard let controller = controller else { return }
+		let router = InfoRounter()
+		router.present(from: controller, with: ())
+	}
+
 }
