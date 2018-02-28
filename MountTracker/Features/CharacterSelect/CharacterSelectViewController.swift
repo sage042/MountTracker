@@ -178,6 +178,14 @@ class CharacterSelectViewController: UIViewController {
 				aView.backgroundColor = faction.backgroundColor
 			})
 			.disposed(by: disposeBag)
+
+		view.rx
+			.observe(CGRect.self, "frame")
+			.subscribe(onNext: { [weak self] (frame) in
+				guard let frame = frame else { return }
+				self?.gradientLayer.frame = frame
+			})
+			.disposed(by: disposeBag)
 	}
 
 	// MARK: - Methods

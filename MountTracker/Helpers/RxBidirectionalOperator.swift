@@ -49,6 +49,7 @@ func fetch<T: Codable>(to model: BehaviorSubject<T?>, dispose: DisposeBag) -> (U
 	return { (request) -> Void in
 		guard let request = request else { return }
 		requestData(request)
+			.debug()
 			.map(response(to: T.self))
 			.catchErrorJustReturn(nil)
 			.bind(to: model)

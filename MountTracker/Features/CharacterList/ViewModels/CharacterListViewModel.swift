@@ -30,6 +30,7 @@ class CharacterListViewModel {
 
 		let fetchRequest = fetch(to: characterList, dispose: disposeBag)
 		authentication.accessToken.asObserver()
+			.debug()
 			.map(Api.profile)
 			.subscribe(onNext: fetchRequest)
 			.disposed(by: disposeBag)

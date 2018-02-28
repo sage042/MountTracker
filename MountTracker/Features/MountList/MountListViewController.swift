@@ -90,14 +90,15 @@ class MountListViewController: UIViewController {
 			.disposed(by: disposeBag)
 
 		view.rx
-			.observe(CGRect.self, "bounds")
+			.observe(CGRect.self, "frame")
 			.subscribe(onNext: { [weak self] (frame) in
-				guard let frame = frame else { return }
+			guard let frame = frame else { return }
 				let flow = UICollectionViewFlowLayout()
 				flow.headerReferenceSize = CGSize(width: frame.width, height: 26)
 				flow.itemSize = CGSize(width: frame.width - 28, height: 72)
 				flow.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
 				self?.collectionView.setCollectionViewLayout(flow, animated: false)
+				self?.gradientLayer.frame = frame
 			})
 			.disposed(by: disposeBag)
 

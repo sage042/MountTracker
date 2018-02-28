@@ -82,8 +82,9 @@ enum Api {
 	static func profile(accessToken: String?) -> URLRequest? {
 		guard let accessToken = accessToken,
 			let url = URL(string: baseUrl + "/user/characters"),
-			let request = try? URLRequest(url: url, method: .get)
+			var request = try? URLRequest(url: url, method: .get)
 			else { return nil }
+		request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
 		let result = try? URLEncoding.queryString
 			.encode(request, with: ["access_token": accessToken])
 		return result
