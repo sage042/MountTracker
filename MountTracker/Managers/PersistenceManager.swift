@@ -22,6 +22,9 @@ enum Persistence {
 	static var secure: PersistenceManager = {
 		return KeychainPersistence()
 	}()
+	static var bundle: PersistenceManager = {
+		return BundlePersistence()
+	}()
 }
 
 // MARK: - Global instances

@@ -36,7 +36,7 @@ final class MountListViewModel {
 	// MARK: - Properties
 	private let masterMounts: Variable<MasterMountListModel?> = Variable(nil)
 	public let searchTerm: Variable<String> = Variable("")
-	public let sortDirection: Variable<SortDirection> = Variable(SortDirection.topDown)
+	public let sortDirection: Variable<SortDirection> = Variable(SortDirection.bottomUp)
 
 	// MARK: - Observables
 	public let characterMounts: Observable<CharacterMountsModel?>
@@ -48,14 +48,24 @@ final class MountListViewModel {
 
 		self.characterMounts = characterMounts
 
+		// Filter to remove race restricted mounts from needed list
+		let raceFilter: RaceFilter = RaceFilter()
+		let mountFilterRace: Observable<MountFilter?> = characterMounts
+			.map { character in
+				let filter = raceFilter.filter(race: character?.race)
+				return filter ?? { _ in return true }
+			}
+
 		let masterList = Observable
 			.combineLatest(masterMounts.asObservable().map { $0?.mounts ?? [] },
-						   searchTerm.asObservable())
+						   searchTerm.asObservable(),
+						   mountFilterRace)
 			.map(filterMount)
 
 		let characterList = Observable
 			.combineLatest(characterMounts.asObservable().map { $0?.mounts.collected ?? [] },
-						   searchTerm.asObservable())
+						   searchTerm.asObservable(),
+						   Observable<MountFilter?>.just(nil))
 			.map(filterMount)
 
 		// Map dataSource to character and master lists
@@ -78,6 +88,13 @@ final class MountListViewModel {
 	// MARK: - Networking Methods
 
 	func fetch() {
+
+		// Attempt to load from disk first
+		if let mounts: MasterMountListModel = Persistence.bundle.load(with: "MountData/mounts.json") {
+			masterMounts.value = mounts
+			return
+		}
+
 		guard let url = Api.masterMountList() else {
 			return
 		}
@@ -88,12 +105,19 @@ final class MountListViewModel {
 			})
 			.disposed(by: disposeBag)
 	}
-	
+
 }
 
-private func filterMount(list: [MountModel], searchTerm: String) -> [MountModel] {
-	guard !searchTerm.isEmpty else { return list }
-	return list.filter { $0.name.lowercased().contains(searchTerm) }
+private func filterMount(list: [MountModel], searchTerm: String, raceFilter: MountFilter?) -> [MountModel] {
+	do {
+		let filteredList: [MountModel] = try raceFilter.map(list.filter) ?? list
+		guard !searchTerm.isEmpty else { return filteredList }
+		return filteredList.filter { $0.name.lowercased().contains(searchTerm) }
+	}
+	catch {
+		print("filter mount \(error)")
+		return list
+	}
 }
 
 private func makeMountList(master: [MountModel],
@@ -126,3 +150,4 @@ private func makeMountList(master: [MountModel],
 	// reverse the order if bottomUp
 	return sortDirection == .bottomUp ? result.reversed() : result
 }
+

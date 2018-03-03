@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MasterMountListModel: Decodable {
+struct MasterMountListModel: Codable {
 	var mounts: [MountModel]
 }
 

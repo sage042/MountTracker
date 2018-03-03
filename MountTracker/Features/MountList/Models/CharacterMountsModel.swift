@@ -17,6 +17,7 @@ struct CharacterMountsModel: Codable {
 	var realm: String
 	var faction: Faction
 	var mounts: MountListModel
+	var race: Int
 	var thumbnail: String
 }
 
