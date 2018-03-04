@@ -18,6 +18,7 @@ class CharacterSelectViewController: UIViewController {
 
 	@IBOutlet weak var characterField: UITextField!
 	@IBOutlet weak var realmField: UITextField!
+	@IBOutlet weak var fetchButton: UIButton!
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var loginButton: UIButton!
 
@@ -124,14 +125,16 @@ class CharacterSelectViewController: UIViewController {
 		(characterField.rx.text <-> characterViewModel.characterString)
 			.disposed(by: disposeBag)
 
-		// Map character selection after login to characterSelect
+		// Map character selection after login to characterString
 		characterViewModel.characterSelect
-			.map { $0?.name }
 			.filter { $0 != nil }
+			.map { $0?.name }
 			.bind(to: characterViewModel.characterString)
 			.disposed(by: disposeBag)
 
+		// Map character selection after login to realm
 		characterViewModel.characterSelect
+			.filter { $0 != nil }
 			.map { $0?.realm }
 			.map { [unowned self] (realm) -> RealmModel? in
 				guard let realm = realm else { return nil }
@@ -140,10 +143,25 @@ class CharacterSelectViewController: UIViewController {
 				}
 				return result
 			}
-			.filter { $0 != nil }
 			.bind(to: characterViewModel.realm)
 			.disposed(by: disposeBag)
 
+		// fetch 0.5 seconds after character selected
+		characterViewModel.characterSelect
+			.filter { $0 != nil }
+			.delay(0.5, scheduler: MainScheduler.asyncInstance)
+			.subscribe(onNext: { [weak self] selection in
+				self?.characterViewModel.fetch()
+				self?.characterViewModel.characterSelect.onNext(nil)
+			})
+			.disposed(by: disposeBag)
+
+		fetchButton.rx
+			.tap
+			.subscribe(onNext: { [unowned self] _ in
+				self.characterViewModel.fetch()
+			})
+			.disposed(by: disposeBag)
 	}
 
 	func portraitSetup() {

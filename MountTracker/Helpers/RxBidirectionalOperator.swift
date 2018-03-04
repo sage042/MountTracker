@@ -34,14 +34,12 @@ func response<T: Codable>(to resultType: T.Type) -> (HTTPURLResponse, Data) thro
 	return closure
 }
 
-func fetch<T: Codable>(to model: Variable<T?>, dispose: DisposeBag) -> (URL?) -> Void {
-	return { (url) -> Void in
-		guard let url = url else { return }
-		requestData(.get, url)
-			.map(response(to: T.self))
+func fetchURL<T: Codable>(_ model: T.Type) -> (URL?) throws -> Observable<T?> {
+	return { (url) throws -> Observable<T?> in
+		guard let url = url else { return Observable<T?>.just(nil) }
+		return requestData(.get, url)
+			.map(response(to: model))
 			.catchErrorJustReturn(nil)
-			.bind(to: model)
-			.disposed(by: dispose)
 	}
 }
 

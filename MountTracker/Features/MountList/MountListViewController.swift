@@ -60,6 +60,13 @@ class MountListViewController: UIViewController {
 
 		collectionView.register(MountCollectionViewCell.self)
 
+		// Scroll to top when data changes
+		mountViewModel.dataSource
+			.subscribe(onNext: { [weak self] _ in
+				self?.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
+			})
+			.disposed(by: disposeBag)
+
 		collectionView.register(
 			MountHeaderCollectionReusableView.self,
 			forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)

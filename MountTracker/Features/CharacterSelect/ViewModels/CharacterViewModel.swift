@@ -56,27 +56,6 @@ final class CharacterViewModel {
 		anonymous = _anonymous.asObservable()
 		characterName = characterMounts.map { $0?.name }
 
-		// observe changes to selected character and realm
-		// fetch characterMounts every 0.5 seconds
-		let charRealm = Observable
-			.combineLatest(characterString.asObservable(), realm.asObservable())
-			.debounce(0.5, scheduler: MainScheduler.instance)
-
-		// Save selections on change
-		charRealm
-			.subscribe(onNext: { (character, realm) in
-				Persistence.main.save(character, with: Keys.characterString.rawValue)
-				Persistence.main.save(realm, with: Keys.realmString.rawValue)
-			})
-			.disposed(by: disposeBag)
-
-		// fetch character on change
-		charRealm
-			.map { ($0.0, $0.1?.slug) }
-			.map(Api.mounts)
-			.subscribe(onNext: fetch(to: _characterMounts, dispose: disposeBag))
-			.disposed(by: disposeBag)
-
 		characterMounts
 			.subscribe(onNext: fetchThumbnail)
 			.disposed(by: disposeBag)
@@ -85,6 +64,22 @@ final class CharacterViewModel {
 			.subscribe(onNext: { character in
 				Persistence.main.save(character, with: Keys.characterMounts.rawValue)
 			})
+			.disposed(by: disposeBag)
+
+	}
+
+	func fetch() {
+		Observable
+			.just((characterString.value, realm.value))
+			.do(onNext: { (character, realm) in
+				Persistence.main.save(character, with: Keys.characterString.rawValue)
+				Persistence.main.save(realm, with: Keys.realmString.rawValue)
+			})
+			.map { ($0.0, $0.1?.slug) }
+			.map(Api.mounts)
+			.flatMapLatest(fetchURL(CharacterMountsModel.self))
+			.debug("characterViewModel fetch")
+			.bind(to: _characterMounts)
 			.disposed(by: disposeBag)
 	}
 
