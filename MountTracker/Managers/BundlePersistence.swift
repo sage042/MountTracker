@@ -21,6 +21,9 @@ struct BundlePersistence: PersistenceManager {
 			let data = FileManager.default.contents(atPath: path) else {
 			return nil
 		}
+		if let wantsData = data as? T {
+			return wantsData
+		}
 		do {
 			let result: T = try jsonDecoder.decode(T.self, from: data)
 			return result

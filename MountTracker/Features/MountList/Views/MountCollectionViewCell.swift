@@ -24,8 +24,13 @@ class MountCollectionViewCell: UICollectionViewCell, RxImageReceiver {
     }
 	
 	func prepare(with model: MountModel) {
-		loadImage(Api.iconURL(model.icon),
-				  in: iconImage)
+		if let path: Data = Persistence.bundle.load(with: "MountData/icons/\(model.icon).jpg") {
+			iconImage.image = UIImage(data: path)
+		}
+		else {
+			loadImage(Api.iconURL(model.icon),
+					  in: iconImage)
+		}
 		nameLabel.text = model.name
 	}
 

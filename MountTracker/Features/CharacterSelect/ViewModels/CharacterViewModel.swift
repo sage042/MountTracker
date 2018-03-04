@@ -78,7 +78,6 @@ final class CharacterViewModel {
 			.map { ($0.0, $0.1?.slug) }
 			.map(Api.mounts)
 			.flatMapLatest(fetchURL(CharacterMountsModel.self))
-			.debug("characterViewModel fetch")
 			.bind(to: _characterMounts)
 			.disposed(by: disposeBag)
 	}
